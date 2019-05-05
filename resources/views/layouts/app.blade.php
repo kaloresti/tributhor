@@ -73,8 +73,40 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-2">
+                        <div class="card">
+                            <div class="card-header">Menu</div>
+                            <div class="card-body">
+                                @if (session('status'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
+
+                                <a href="/home">Dashboard</a> <br>
+                                <a href="/prefeituras">Prefeituras</a> <br>
+                                <a href="/suporte">Suporte</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Library</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Data</li>
+                            </ol>
+                        <div class="card">                           
+                            <div class="card-body">
+                                @yield('content')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
+
     </div>
 </body>
 </html>
