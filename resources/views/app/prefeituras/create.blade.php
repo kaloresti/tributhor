@@ -45,7 +45,12 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label class="font-weight-bold" for="">Cor Principal</label>
-                    <input type="text" class="form-control" id="">
+                    <div id="cp2" class="input-group" title="Using input value">
+                        <input type="text" class="form-control input-lg" value="#DD0F20FF"/>
+                        <span class="input-group-append">
+                            <span class="input-group-text colorpicker-input-addon"><i></i></span>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group col-md-3">
                     <label class="font-weight-bold">Cor Secundária</label>
@@ -56,5 +61,10 @@
             <button class="btn btn-success btn-lg">Salvar</button>
         </form>
     </fieldset>
-
+    <script>
+  $(function () {
+    $('#cp2').colorpicker();
+    //$('#cp4').colorpicker({"color": "#16813D"});
+  });
+</script>
 @endsection
