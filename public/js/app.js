@@ -1763,6 +1763,10 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_the_mask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-the-mask */ "./node_modules/vue-the-mask/dist/vue-the-mask.js");
+/* harmony import */ var vue_the_mask__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_the_mask__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -1805,9 +1809,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  directives: {
+    mask: vue_the_mask__WEBPACK_IMPORTED_MODULE_0__["mask"]
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  data: function data() {
+    return {
+      cep: null,
+      loading: true,
+      endereco: {},
+      erro: false
+    };
+  },
+  methods: {
+    pesquisarCep: function pesquisarCep(e) {
+      this.cep = e.target.value;
+      this.cep = this.cep.replace('-', '');
+      var self = this;
+      $.getJSON("https://viacep.com.br/ws/" + this.cep + "/json/", function (endereco) {
+        if (endereco.erro == true) {
+          self.endereco = {};
+          self.erro = true;
+          $("#cep").focus();
+        } else {
+          self.erro = false;
+          console.log(endereco);
+          self.endereco = endereco;
+          $("#numero").focus();
+        }
+      });
+    }
   }
 });
 
@@ -1884,6 +1929,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     excluir: function excluir() {
       this.url = null;
+      var file = null;
     }
   }
 });
@@ -37189,92 +37235,282 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "form-row" }, [
-        _c("div", { staticClass: "form-group col-md-2" }, [
-          _c("label", { staticClass: "font-weight-bold" }, [_vm._v("CEP")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "" }
-          })
-        ])
+  return _c("div", [
+    _c("div", { staticClass: "form-row" }, [
+      _c("div", { staticClass: "form-group col-md-2" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [_vm._v("CEP")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.cep,
+              expression: "endereco.cep"
+            },
+            {
+              name: "mask",
+              rawName: "v-mask",
+              value: "#####-###",
+              expression: "'#####-###'"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "cep", name: "cep", type: "text" },
+          domProps: { value: _vm.endereco.cep },
+          on: {
+            change: _vm.pesquisarCep,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "cep", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-row" }, [
+      _c("div", { staticClass: "form-group col-md-2" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [_vm._v("UF")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.uf,
+              expression: "endereco.uf"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "uf", name: "uf", type: "text" },
+          domProps: { value: _vm.endereco.uf },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "uf", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-row" }, [
-        _c("div", { staticClass: "form-group col-md-2" }, [
-          _c("label", { staticClass: "font-weight-bold" }, [_vm._v("UF")]),
-          _vm._v(" "),
-          _c("select", { staticClass: "form-control", attrs: { id: "" } }, [
-            _c("option", { attrs: { selected: "" } }, [_vm._v("Choose...")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("...")])
-          ])
-        ]),
+      _c("div", { staticClass: "form-group col-md-5" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [_vm._v("Município")]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-5" }, [
-          _c("label", { staticClass: "font-weight-bold" }, [
-            _vm._v("Município")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "" }
-          })
-        ]),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.localidade,
+              expression: "endereco.localidade"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "localidade", name: "localidade", type: "text" },
+          domProps: { value: _vm.endereco.localidade },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "localidade", $event.target.value)
+            }
+          }
+        }),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-5" }, [
-          _c("label", { staticClass: "font-weight-bold" }, [_vm._v("Bairro")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "" }
-          })
-        ])
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-row" }, [
-        _c("div", { staticClass: "form-group col-md-6" }, [
-          _c("label", { staticClass: "font-weight-bold" }, [
-            _vm._v("Logradouro")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "" }
-          })
+      _c("div", { staticClass: "form-group col-md-5" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [_vm._v("Bairro")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.bairro,
+              expression: "endereco.bairro"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "bairro", name: "bairro", type: "text" },
+          domProps: { value: _vm.endereco.bairro },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "bairro", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-row" }, [
+      _c("div", { staticClass: "form-group col-md-4" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [
+          _vm._v("Logradouro")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-2" }, [
-          _c("label", { staticClass: "font-weight-bold" }, [_vm._v("Número")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "" }
-          })
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.logradouro,
+              expression: "endereco.logradouro"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "logradouro", name: "logradouro", type: "text" },
+          domProps: { value: _vm.endereco.logradouro },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "logradouro", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group col-md-2" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [_vm._v("Número")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.numero,
+              expression: "endereco.numero"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "numero", name: "numero", type: "text" },
+          domProps: { value: _vm.endereco.numero },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "numero", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group col-md-4" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [
+          _vm._v("Complemento")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-4" }, [
-          _c("label", { staticClass: "font-weight-bold" }, [
-            _vm._v("Complemento")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", id: "" }
-          })
-        ])
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.complemento,
+              expression: "endereco.complemento"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "complemento", name: "complemento", type: "text" },
+          domProps: { value: _vm.endereco.complemento },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "complemento", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group col-md-2" }, [
+        _c("label", { staticClass: "font-weight-bold" }, [_vm._v("Ibge")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.endereco.ibge,
+              expression: "endereco.ibge"
+            }
+          ],
+          staticClass: "form-control disabled",
+          attrs: { readonly: "", id: "ibge", name: "ibge", type: "text" },
+          domProps: { value: _vm.endereco.ibge },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.endereco, "ibge", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.erro == true
+          ? _c("span", { staticClass: "badge badge-danger" }, [
+              _vm._v("CEP não localizado!")
+            ])
+          : _vm._e()
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37348,7 +37584,7 @@ var render = function() {
       _c("input", {
         ref: "myFiles",
         staticClass: "custom-file-input col-md-12",
-        attrs: { type: "file", id: "customFile" },
+        attrs: { type: "file", id: "brasao", name: "brasao" },
         on: { change: _vm.onFileChange }
       }),
       _vm._v(" "),
@@ -37360,7 +37596,11 @@ var render = function() {
     _vm._v(" "),
     _c("div", { attrs: { id: "preview" } }, [
       _vm.url
-        ? _c("img", { staticClass: "rounded", attrs: { src: _vm.url } })
+        ? _c("img", {
+            staticClass: "rounded",
+            staticStyle: { width: "100px", height: "100px" },
+            attrs: { src: _vm.url }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.url
@@ -37484,6 +37724,17 @@ function normalizeComponent (
   }
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-the-mask/dist/vue-the-mask.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vue-the-mask/dist/vue-the-mask.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function(e,t){ true?module.exports=t():undefined})(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var a=n[r]={i:r,l:!1,exports:{}};return e[r].call(a.exports,a,a.exports,t),a.l=!0,a.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p=".",t(t.s=10)}([function(e,t){e.exports={"#":{pattern:/\d/},X:{pattern:/[0-9a-zA-Z]/},S:{pattern:/[a-zA-Z]/},A:{pattern:/[a-zA-Z]/,transform:function(e){return e.toLocaleUpperCase()}},a:{pattern:/[a-zA-Z]/,transform:function(e){return e.toLocaleLowerCase()}},"!":{escape:!0}}},function(e,t,n){"use strict";function r(e){var t=document.createEvent("Event");return t.initEvent(e,!0,!0),t}var a=n(2),o=n(0),i=n.n(o);t.a=function(e,t){var o=t.value;if((Array.isArray(o)||"string"==typeof o)&&(o={mask:o,tokens:i.a}),"INPUT"!==e.tagName.toLocaleUpperCase()){var u=e.getElementsByTagName("input");if(1!==u.length)throw new Error("v-mask directive requires 1 input, found "+u.length);e=u[0]}e.oninput=function(t){if(t.isTrusted){var i=e.selectionEnd,u=e.value[i-1];for(e.value=n.i(a.a)(e.value,o.mask,!0,o.tokens);i<e.value.length&&e.value.charAt(i-1)!==u;)i++;e===document.activeElement&&(e.setSelectionRange(i,i),setTimeout(function(){e.setSelectionRange(i,i)},0)),e.dispatchEvent(r("input"))}};var s=n.i(a.a)(e.value,o.mask,!0,o.tokens);s!==e.value&&(e.value=s,e.dispatchEvent(r("input")))}},function(e,t,n){"use strict";var r=n(6),a=n(5);t.a=function(e,t){var o=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],i=arguments[3];return Array.isArray(t)?n.i(a.a)(r.a,t,i)(e,t,o,i):n.i(r.a)(e,t,o,i)}},function(e,t,n){"use strict";function r(e){e.component(s.a.name,s.a),e.directive("mask",i.a)}Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),o=n.n(a),i=n(1),u=n(7),s=n.n(u);n.d(t,"TheMask",function(){return s.a}),n.d(t,"mask",function(){return i.a}),n.d(t,"tokens",function(){return o.a}),n.d(t,"version",function(){return c});var c="0.11.1";t.default=r,"undefined"!=typeof window&&window.Vue&&window.Vue.use(r)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(1),a=n(0),o=n.n(a),i=n(2);t.default={name:"TheMask",props:{value:[String,Number],mask:{type:[String,Array],required:!0},masked:{type:Boolean,default:!1},tokens:{type:Object,default:function(){return o.a}}},directives:{mask:r.a},data:function(){return{lastValue:null,display:this.value}},watch:{value:function(e){e!==this.lastValue&&(this.display=e)},masked:function(){this.refresh(this.display)}},computed:{config:function(){return{mask:this.mask,tokens:this.tokens,masked:this.masked}}},methods:{onInput:function(e){e.isTrusted||this.refresh(e.target.value)},refresh:function(e){this.display=e;var e=n.i(i.a)(e,this.mask,this.masked,this.tokens);e!==this.lastValue&&(this.lastValue=e,this.$emit("input",e))}}}},function(e,t,n){"use strict";function r(e,t,n){return t=t.sort(function(e,t){return e.length-t.length}),function(r,a){for(var o=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],i=0;i<t.length;){var u=t[i];i++;var s=t[i];if(!(s&&e(r,s,!0,n).length>u.length))return e(r,u,o,n)}return""}}t.a=r},function(e,t,n){"use strict";function r(e,t){var n=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],r=arguments[3];e=e||"",t=t||"";for(var a=0,o=0,i="";a<t.length&&o<e.length;){var u=t[a],s=r[u],c=e[o];s&&!s.escape?(s.pattern.test(c)&&(i+=s.transform?s.transform(c):c,a++),o++):(s&&s.escape&&(a++,u=t[a]),n&&(i+=u),c===u&&o++,a++)}for(var f="";a<t.length&&n;){var u=t[a];if(r[u]){f="";break}f+=u,a++}return i+f}t.a=r},function(e,t,n){var r=n(8)(n(4),n(9),null,null);e.exports=r.exports},function(e,t){e.exports=function(e,t,n,r){var a,o=e=e||{},i=typeof e.default;"object"!==i&&"function"!==i||(a=e,o=e.default);var u="function"==typeof o?o.options:o;if(t&&(u.render=t.render,u.staticRenderFns=t.staticRenderFns),n&&(u._scopeId=n),r){var s=u.computed||(u.computed={});Object.keys(r).forEach(function(e){var t=r[e];s[e]=function(){return t}})}return{esModule:a,exports:o,options:u}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement;return(e._self._c||t)("input",{directives:[{name:"mask",rawName:"v-mask",value:e.config,expression:"config"}],attrs:{type:"text"},domProps:{value:e.display},on:{input:e.onInput}})},staticRenderFns:[]}},function(e,t,n){e.exports=n(3)}])});
 
 /***/ }),
 
@@ -49544,6 +49795,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('endereco-component', __webpack_require__(/*! ./components/EnderecoComponent.vue */ "./resources/js/components/EnderecoComponent.vue")["default"]);
 Vue.component('file-image-component', __webpack_require__(/*! ./components/FileImageComponent.vue */ "./resources/js/components/FileImageComponent.vue")["default"]);
+Vue.component('color-component', __webpack_require__(/*! ./components/ColorComponent.vue */ "./resources/js/components/ColorComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49611,6 +49863,38 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/ColorComponent.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/ColorComponent.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/ColorComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 

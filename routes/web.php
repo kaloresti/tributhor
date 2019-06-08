@@ -21,5 +21,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/prefeituras', 'PrefeituraController@index')->name('prefeituras');
     Route::get('/prefeituras/create', 'PrefeituraController@create')->name('nova_prefeitura');
+    Route::post('/prefeituras/store', 'PrefeituraController@store')->name('gravar_prefeitura');
+    Route::get('/prefeituras/{id_prefeitura}/show', 'PrefeituraController@show')->name('mostrar_prefeitura');
 });
 

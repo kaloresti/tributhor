@@ -7,18 +7,27 @@
             {{ session('status') }}
         </div>
     @endif
-
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <fieldset>
         <legend>
             Nova Prefeitura 
         </legend>
-        <form action="/prefeituras/store">
+        <form method="POST" action="/prefeituras/store" enctype="multipart/form-data">
+        @csrf
             <endereco-component></endereco-component>
             <hr>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for=""> <b>Sigla</b></label>
-                    <input type="text" class="form-control" id="">
+                    <input type="text" class="form-control" id="sigla" name="sigla">
                 </div>
                 
             </div>
@@ -27,16 +36,16 @@
                 <div class="form-group col-md-2">
                     <label class="font-weight-bold">Status/Situação</label>
                     <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" checked="true" id="customSwitch1">
-                    <label class="custom-control-label" for="customSwitch1">Em homologação</label>
+                        <input type="checkbox" class="custom-control-input" checked="true" id="situacao" name="situacao" value="homologacao">
+                        <label class="custom-control-label" for="customSwitch1">Em homologação</label>
                     </div>
                     <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" disabled id="customSwitch2">
-                    <label class="custom-control-label" for="customSwitch2">Ativo</label>
+                        <input type="checkbox" disabled class="custom-control-input" id="situacao" name="situacao">
+                        <label class="custom-control-label" for="customSwitch2">Ativo</label>
                     </div>
                     <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" disabled id="customSwitch2">
-                    <label class="custom-control-label" for="customSwitch2">Inativo</label>
+                        <input type="checkbox" disabled class="custom-control-input" id="situacao" name="situacao">
+                        <label class="custom-control-label" for="customSwitch2">Inativo</label>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -46,25 +55,17 @@
                 <div class="form-group col-md-3">
                     <label class="font-weight-bold" for="">Cor Principal</label>
                     <div id="cp2" class="input-group" title="Using input value">
-                        <input type="text" class="form-control input-lg" value="#DD0F20FF"/>
-                        <span class="input-group-append">
-                            <span class="input-group-text colorpicker-input-addon"><i></i></span>
-                        </span>
+                        <input type="color" name="cor_primaria" class="form-control input-lg" value="cor_primaria"/>
                     </div>
                 </div>
                 <div class="form-group col-md-3">
                     <label class="font-weight-bold">Cor Secundária</label>
-                    <input type="text" class="form-control" id="">
+                    <input type="color" name="cor_secundaria" class="form-control" id="cor_secundaria">
                 </div>
             </div>
             <hr>
-            <button class="btn btn-success btn-lg">Salvar</button>
+            <button type="submit" class="btn btn-success btn-lg">Salvar</button>
         </form>
     </fieldset>
-    <script>
-  $(function () {
-    $('#cp2').colorpicker();
-    //$('#cp4').colorpicker({"color": "#16813D"});
-  });
-</script>
+   
 @endsection

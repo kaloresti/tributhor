@@ -87,19 +87,22 @@
                                 @endif
 
                                 <a href="/home">Dashboard</a> <br>
-                                <a href="/prefeituras">Prefeituras</a> <br>
-                                <a href="/suporte">Suporte</a>
+                                <a href="/prefeituras">Meu municipio</a> <br>
+                                <!-- <a href="/suporte">Suporte</a> -->
                             </div>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <ol class="breadcrumb">
+                        <!-- <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">Library</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Data</li>
-                            </ol>
+                            </ol> -->
                         <div class="card">                           
                             <div class="card-body">
+                            <h3>{{$prefeitura->nome}}</h3>
+                                <span class="badge badge-pill badge-success">ativo</span> <span class="badge badge-pill badge-dark">Município {{$prefeitura->localidade}}. Bairro {{$prefeitura->bairro}}, {{$prefeitura->logradouro}} {{$prefeitura->uf}}</span> 
+                                <br><br>
                                 @yield('content')
                             </div>
                         </div>

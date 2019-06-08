@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="custom-file">
-            <input  @change="onFileChange" type="file" ref="myFiles" class="custom-file-input col-md-12" id="customFile">
+            <input  @change="onFileChange" type="file" ref="myFiles" class="custom-file-input col-md-12" id="brasao" name="brasao">
             <label class="custom-file-label" for="customFile"></label>
         </div>
         <div id="preview">
-            <img class="rounded" v-if="url" :src="url" />
+            <img style="width:100px; height:100px;" class="rounded" v-if="url" :src="url" />
             <button @click="excluir" v-if="url" class="btn btn-danger">excluir</button>
         </div>
     </div>     
@@ -28,6 +28,7 @@
             },
             excluir(){
                 this.url = null;
+                const file = null
             },
         }
     }
