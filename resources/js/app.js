@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('endereco-component', require('./components/EnderecoComponent.vue').default);
 Vue.component('file-image-component', require('./components/FileImageComponent.vue').default);
 Vue.component('color-component', require('./components/ColorComponent.vue').default);
+Vue.component('simple-search-component', require('./components/SimpleSearchComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

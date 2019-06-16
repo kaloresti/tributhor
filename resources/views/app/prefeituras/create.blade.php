@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
- 
+
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
@@ -16,9 +16,14 @@
             </ul>
         </div>
     @endif
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
     <fieldset>
         <legend>
-            Nova Prefeitura 
+            <i class="fas fa-plus"></i> Nova Prefeitura 
         </legend>
         <form method="POST" action="/prefeituras/store" enctype="multipart/form-data">
         @csrf
@@ -29,7 +34,6 @@
                     <label for=""> <b>Sigla</b></label>
                     <input type="text" class="form-control" id="sigla" name="sigla">
                 </div>
-                
             </div>
             <hr>
             <div class="form-row">
@@ -64,7 +68,7 @@
                 </div>
             </div>
             <hr>
-            <button type="submit" class="btn btn-success btn-lg">Salvar</button>
+            <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Salvar</button>
         </form>
     </fieldset>
    

@@ -23,5 +23,9 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('/prefeituras/create', 'PrefeituraController@create')->name('nova_prefeitura');
     Route::post('/prefeituras/store', 'PrefeituraController@store')->name('gravar_prefeitura');
     Route::get('/prefeituras/{id_prefeitura}/show', 'PrefeituraController@show')->name('mostrar_prefeitura');
+    Route::get('/prefeituras/{id_prefeitura}/organizacao', 'PrefeituraController@organizacao')->name('organizar_prefeitura');
+
+    Route::post('/prefeitura/{id_prefeitura}/secretarias/store', 'SecretariaController@store')->name('gravar_secretaria');
+    Route::get('/prefeitura/{id_prefeitura}/secretarias/{id_secretaria}/show', 'SecretariaController@show')->name('mostrar_secretaria');
 });
 

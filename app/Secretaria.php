@@ -20,7 +20,6 @@ class Secretaria extends Model
     {
         return [
             'nome' => 'required',
-            'id_prefeitura' => 'required',
             'sigla' => 'required',
         ];
     }

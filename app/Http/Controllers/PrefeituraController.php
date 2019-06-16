@@ -11,6 +11,8 @@ use App\Endereco;
 use App\Prefeitura;
 use App\Secretaria;
 use App\Departamento;
+use App\Orgao;
+use App\Fundacao;
 
 class PrefeituraController extends Controller
 {
@@ -32,8 +34,8 @@ class PrefeituraController extends Controller
     public function index()
     {
         $prefeituras = DB::table("prefeitura")
-                        ->join("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
-                        ->join("brasao", "prefeitura_estilo.id_brasao", "=", "brasao.id")
+                        ->leftJoin("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
+                        ->leftJoin("brasao", "prefeitura_estilo.id_brasao", "=", "brasao.id")
                         ->join("endereco", "endereco.id", "=", "prefeitura.id_endereco")
                         ->select("prefeitura.*", "endereco.uf","endereco.ibge" ,"brasao.nome as arquivo", "brasao.diretorio", "brasao.extensao")
                         ->get();
@@ -55,23 +57,29 @@ class PrefeituraController extends Controller
     {
         // -- validações
         $criticaPrefeitura = Validator::make($request->all(), Prefeitura::rules())->validate();
-        $criticaEndereco = Validator::make($request->all(), Endereco::rules())->validate();
-        $criticaPrefeituraEstilo = Validator::make($request->all(), PrefeituraEstilo::rules())->validate();
+        //$criticaEndereco = Validator::make($request->all(), Endereco::rules())->validate();
+        //$criticaPrefeituraEstilo = Validator::make($request->all(), PrefeituraEstilo::rules())->validate();
        
         $dados = (Object) $request->all();
-
+        $idBrasao = null;
         // -- brasao
-        $brasao = Brasao::create([
-            'nome' => uniqid(date('HisYmd')).'.'.$dados->brasao->extension(),
-            'diretorio' => 'brasoes',
-            'extensao' => $dados->brasao->extension(),
-            'tamanho' => $dados->brasao->getSize(),
-        ]);
-        $request->brasao->storeAs('brasoes', uniqid(date('HisYmd')).'.'.$dados->brasao->extension());
+        if(isset($dados->brasao))
+        {
+            $nomeArquivo = uniqid(date('HisYmd')).'.'.$dados->brasao->extension();
+            $brasao = Brasao::create([
+                'nome' => $nomeArquivo,
+                'diretorio' => 'brasoes',
+                'extensao' => $dados->brasao->extension(),
+                'tamanho' => $dados->brasao->getSize(),
+            ]);
+            $idBrasao = $brasao->id;
+            $request->brasao->storeAs('public/brasoes/', $nomeArquivo);
+        }
+        
         
         // -- estilo da prefeitura
         $prefeitura_estilo = PrefeituraEstilo::create([
-            "id_brasao" => $brasao->id,
+            "id_brasao" => $idBrasao,
             "cor_primaria" => $dados->cor_primaria,
             "cor_secundaria" => $dados->cor_secundaria
         ]);
@@ -122,21 +130,61 @@ class PrefeituraController extends Controller
                 }
             }
         }
+
+        return redirect()->back()->with('message', $prefeitura->nome.' cadastrada com sucesso!');
     }
 
     public function show($id_prefeitura)
     {
+        $classSituacao = 'danger';
+        
         $prefeitura = DB::table("prefeitura")
-                        ->join("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
-                        ->join("brasao", "prefeitura_estilo.id_brasao", "=", "brasao.id")
+                        ->leftJoin("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
+                        ->leftJoin("brasao", "prefeitura_estilo.id_brasao", "=", "brasao.id")
                         ->join("endereco", "endereco.id", "=", "prefeitura.id_endereco")
                         ->select("prefeitura.*", "endereco.uf","endereco.cep" ,"endereco.ibge","endereco.bairro","endereco.logradouro", "endereco.localidade", "brasao.nome as arquivo", "brasao.diretorio", "brasao.extensao")
                         ->where("prefeitura.id", "=", $id_prefeitura)
                         ->get()[0];
 
         $secretarias = Secretaria::where("id_prefeitura", $prefeitura->id)->get();
+        
+        if($prefeitura->situacao == 'homologacao')
+            $classSituacao = "warning";
+        
+        
 
-        return view('app/prefeituras/show', compact('prefeitura', 'secretarias'));
+        return view('app/prefeituras/show', compact('prefeitura', 'secretarias', 'classSituacao'));
+
+    }
+
+    public function organizacao($id_prefeitura)
+    {
+        $classSituacao = 'danger';
+        
+        $prefeitura = DB::table("prefeitura")
+                        ->leftJoin("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
+                        ->leftJoin("brasao", "prefeitura_estilo.id_brasao", "=", "brasao.id")
+                        ->join("endereco", "endereco.id", "=", "prefeitura.id_endereco")
+                        ->select("prefeitura.*", "endereco.uf","endereco.cep" ,"endereco.ibge","endereco.bairro","endereco.logradouro", "endereco.localidade", "brasao.nome as arquivo", "brasao.diretorio", "brasao.extensao")
+                        ->where("prefeitura.id", "=", $id_prefeitura)
+                        ->get()[0];
+
+        $secretarias = Secretaria::where("id_prefeitura", $prefeitura->id)->get();
+        $departamentos = DB::table("departamento")
+                    ->leftJoin("secretaria", "secretaria.id", "=", "departamento.id_secretaria")
+                    ->join("prefeitura", "prefeitura.id", "=", "departamento.id_prefeitura")
+                    ->select("departamento.nome as departamento",
+                             "departamento.sigla as sigla_departamento", 
+                             "secretaria.nome as secretaria")
+                    ->where("prefeitura.id", "=", $id_prefeitura)
+                    ->get();
+        $orgaos = Orgao::where("id_prefeitura", $prefeitura->id)->get();
+        $fundacoes = Fundacao::where("id_prefeitura", $prefeitura->id)->get();
+        
+        if($prefeitura->situacao == 'homologacao')
+            $classSituacao = "warning";
+        
+        return view('app/organizacao/index', compact('prefeitura', 'secretarias', 'departamentos', 'orgaos', 'fundacoes' , 'classSituacao'));
 
     }
 }

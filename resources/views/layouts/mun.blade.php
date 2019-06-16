@@ -23,9 +23,11 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+            <div class="container-fluid">
+                <img width="30" height="30" src="{{ asset('storage/brasoes/'.$prefeitura->arquivo)}}" alt=""> 
+                &nbsp &nbsp &nbsp
+                <a class="navbar-brand" href="/prefeituras/{{$prefeitura->id}}/show">
+                    <b class="text-uppercase">{{$prefeitura->nome}} - {{$prefeitura->uf}}</b>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -52,7 +54,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                   <i class="fas fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -77,35 +79,34 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-2">
-                        <div class="card">
-                            <div class="card-header">Menu</div>
-                            <div class="card-body">
-                                @if (session('status'))
-                                    <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
-                                    </div>
-                                @endif
-
-                                <a href="/home">Dashboard</a> <br>
-                                <a href="/prefeituras">Meu municipio</a> <br>
-                                <!-- <a href="/suporte">Suporte</a> -->
+                    <div class="list-group">
+                        <a href="/prefeituras/{{$prefeitura->id}}/show" class="list-group-item list-group-item-action flex-column align-items-start active">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1"><i class="far fa-hand-point-right"></i> Dashboard</h5>
                             </div>
-                        </div>
+                            <small><i class="fas fa-chart-line"></i> resumo de operações, desempenho e histórico.</small>
+                        </a>
+                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1"><i class="far fa-hand-point-right"></i> Estrutura Física</h5>
+                            </div>
+                            <small><i class="fas fa-sitemap"></i> secretarias, departamentos, servidores e outras entidades.</small>
+                        </a>
+                    </div>
+                        
+                        
+                      
+                       
+                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-briefcase"></i> &nbsp Cadastro Mobiliário</a> <br><br>
+                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-house-damage"></i> &nbsp Cadastro Imobiliário</a> <br><br>
+                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-file-invoice-dollar"></i> &nbsp Arrecadação</a> <br><br>
+                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-receipt"></i> &nbsp NFSe</a> <br><br>
+                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-cogs"></i> &nbsp Configurações</a> <br>
                     </div>
                     <div class="col-md-8">
-                        <!-- <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Library</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Data</li>
-                            </ol> -->
-                        <div class="card">                           
-                            <div class="card-body">
-                            <h3>{{$prefeitura->nome}}</h3>
-                                <span class="badge badge-pill badge-success">ativo</span> <span class="badge badge-pill badge-dark">Município {{$prefeitura->localidade}}. Bairro {{$prefeitura->bairro}}, {{$prefeitura->logradouro}} {{$prefeitura->uf}}</span> 
-                                <br><br>
-                                @yield('content')
-                            </div>
-                        </div>
+                       
+                        @yield('content')
+                       
                     </div>
                 </div>
             </div>
