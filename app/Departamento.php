@@ -17,11 +17,11 @@ class Departamento extends Model
         "sigla",
     ];
     
-    public function rules()
+    static function rules()
     {
         return [
             'nome' => 'required',
-            'id_prefeitura' => 'required',
+            //'id_prefeitura' => 'required',
             'sigla' => 'required',
         ];
     }

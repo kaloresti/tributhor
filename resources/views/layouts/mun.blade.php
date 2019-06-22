@@ -20,15 +20,54 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/9807372c65.js"></script>
 </head>
+
 <body>
+<style>
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 500px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 14px;}
+}
+</style>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-laravel">
             <div class="container-fluid">
-                <img width="30" height="30" src="{{ asset('storage/brasoes/'.$prefeitura->arquivo)}}" alt=""> 
                 &nbsp &nbsp &nbsp
-                <a class="navbar-brand" href="/prefeituras/{{$prefeitura->id}}/show">
-                    <b class="text-uppercase">{{$prefeitura->nome}} - {{$prefeitura->uf}}</b>
-                </a>
+                <span style="font-size:30px;cursor:pointer" onclick="openNav()"><i class="fas fa-bars"></i></span>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -58,12 +97,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/prefeituras/{{$prefeitura->id}}/configuracoes"><i class="fas fa-cogs"></i> Configurações</a> 
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                       <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                                     </a>
-
+                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -78,40 +119,80 @@
         <main class="py-4">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-md-2">
-                    <div class="list-group">
-                        <a href="/prefeituras/{{$prefeitura->id}}/show" class="list-group-item list-group-item-action flex-column align-items-start active">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1"><i class="far fa-hand-point-right"></i> Dashboard</h5>
+                    
+                    <div id="mySidenav" class="sidenav">
+                        <div class="row">
+                            <div class="col-md-2">
+
                             </div>
-                            <small><i class="fas fa-chart-line"></i> resumo de operações, desempenho e histórico.</small>
-                        </a>
-                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1"><i class="far fa-hand-point-right"></i> Estrutura Física</h5>
+                            <div class="col-md-8" style="text-align:center;">
+                                <img style="margin:auto" width="150" height="150" src="{{ asset('storage/brasoes/'.$prefeitura->arquivo)}}" alt="">
                             </div>
-                            <small><i class="fas fa-sitemap"></i> secretarias, departamentos, servidores e outras entidades.</small>
-                        </a>
-                    </div>
+                            <div class="col-md-2">
+                                    
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:center;">
+                            <div class="col-md-12">
+                                <b style="color:grey" class="text-uppercase">{{$prefeitura->nome}} - {{$prefeitura->uf}}</b><br>
+                                <b style="color:grey" ><i class="fas fa-user"></i> {{ Auth::user()->name }}</b> 
+                            </div>
+                        </div><br>
+                        <div class="row" style="text-align:center; padding: 5px 5px 5px 5px;">
+                            
+                                <div class="col-md-4">
+                                    <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-chart-line"></i></button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button title="Estrutura Física do Município"  class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/organizacao') }}'"><i class="fas fa-sitemap"></i> </button> 
+                                </div>
+                                <div class="col-md-4">
+                                <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-briefcase"></i></i></button>
+                                </div>
+                          
+                        </div>
+                        <div class="row" style="text-align:center; padding: 5px 5px 5px 5px;">
+                            
+                                <div class="col-md-4">
+                                    <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-house-damage"></i></button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button title="Estrutura Física do Município"  class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/organizacao') }}'"><i class="fas fa-file-invoice-dollar"></i> </button> 
+                                </div>
+                                <div class="col-md-4">
+                                <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-receipt"></i></i></button>
+                                </div>
+                          
+                        </div>
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                         
-                        
-                      
-                       
-                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-briefcase"></i> &nbsp Cadastro Mobiliário</a> <br><br>
-                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-house-damage"></i> &nbsp Cadastro Imobiliário</a> <br><br>
-                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-file-invoice-dollar"></i> &nbsp Arrecadação</a> <br><br>
-                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-receipt"></i> &nbsp NFSe</a> <br><br>
-                        <a href="/prefeituras/{{$prefeitura->id}}/organizacao"><i class="fas fa-cogs"></i> &nbsp Configurações</a> <br>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-lg-10">
                        
                         @yield('content')
-                       
+                        
+                        
+                        <nav class="navbar fixed-bottom navbar-light bg-light">
+                        &copy 2019 Tributhor - Sistema de Automação em Arrecadação Municipal 
+                        </nav>
                     </div>
                 </div>
+ 
             </div>
         </main>
 
     </div>
 </body>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "450px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+
 </html>

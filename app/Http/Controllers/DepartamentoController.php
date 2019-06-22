@@ -12,9 +12,9 @@ use App\Departamento;
 use App\Endereco;
 use App\Brasao;
 
-class SecretariaController extends Controller
+class DepartamentoController extends Controller
 {
-    /**
+     /**
      * Create a new controller instance.
      *
      * @return void
@@ -26,10 +26,15 @@ class SecretariaController extends Controller
 
     public function store($idPrefeitura, Request $request)
     {
-        $criticaSecretaria = Validator::make($request->all(), Secretaria::rules())->validate();
+        $criticaDepartamento = Validator::make($request->all(), Departamento::rules())->validate();
         $prefeitura = Prefeitura::where("id", $idPrefeitura)->get()[0]; 
         $endereco = Endereco::where("id", $prefeitura->id_endereco)->get()[0];
         $dados = (object)$request->all();
+        $idSecretaria = NULL;
+
+        if($dados->id_secretaria != '-1'){
+            $idSecretaria = $dados->id_secretaria;
+        }
         
         $brasao = Brasao::create([
             "nome" => "no-image.png",
@@ -49,18 +54,19 @@ class SecretariaController extends Controller
             "complemento" => $endereco->complemento
         ]);
 
-        $secretaria = Secretaria::create([
+        $departamento = Departamento::create([
             "nome" => $dados->nome,
             "sigla" => $dados->sigla,
             "id_prefeitura" => $idPrefeitura,
             "id_endereco" => $enderecoCreate->id,
             "id_brasao" => $brasao->id,
+            'id_secretaria' => $idSecretaria,
         ]);
 
-        return redirect()->back()->with('message', 'Secretaria cadastrada com sucesso!');
+        return redirect()->back()->with('message', 'Departamento cadastrado com sucesso!');
     }
 
-    public function show($idPrefeitura, $idSecretaria)
+    public function show($idPrefeitura, $idDepartamemto)
     {
         $prefeitura = DB::table("prefeitura")
                         ->leftJoin("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
@@ -69,42 +75,46 @@ class SecretariaController extends Controller
                         ->select("prefeitura.*", "endereco.uf","endereco.cep" ,"endereco.ibge","endereco.bairro","endereco.logradouro", "endereco.localidade", "brasao.nome as arquivo", "brasao.diretorio", "brasao.extensao")
                         ->where("prefeitura.id", "=", $idPrefeitura)
                         ->get()[0];
-
-        $secretaria = DB::table('secretaria')
-            ->join('prefeitura', 'prefeitura.id', "=", 'secretaria.id_prefeitura')
-            ->leftJoin('brasao', 'brasao.id', "=", 'secretaria.id_brasao')
-            ->select('secretaria.*', 'secretaria.id as id_secretaria', 'secretaria.nome as secretaria', 'brasao.*', 'brasao.nome as arquivo')
-            ->where('secretaria.id', $idSecretaria)
+        
+        $secretarias = Secretaria::where("id_prefeitura", $prefeitura->id)->get();
+        
+        $departamento = DB::table('departamento')
+            ->join('prefeitura', 'prefeitura.id', "=", 'departamento.id_prefeitura')
+            ->leftJoin('secretaria', 'secretaria.id', "=", 'departamento.id_secretaria')
+            ->leftJoin('brasao', 'brasao.id', "=", 'departamento.id_brasao')
+            ->select('departamento.*', 'departamento.id as id_departamento', 'departamento.nome as departamento', 'brasao.*', 'brasao.nome as arquivo')
+            ->where('departamento.id', $idDepartamemto)
             ->where('prefeitura.id', $idPrefeitura)
             ->get()[0];
         
-        $idBrasao = $secretaria->id_brasao;
+        $idBrasao = $departamento->id_brasao;
 
-        $endereco = Endereco::where("id", $secretaria->id_endereco)->get()[0];
+        $endereco = Endereco::where("id", $departamento->id_endereco)->get()[0];
 
-        $departamentos = Departamento::where('id_secretaria', $idSecretaria)->get();
+        //$departamentos = Departamento::where('id_secretaria', $idSecretaria)->get();
 
-        return view('app/secretarias/show', compact('secretaria', 'idBrasao','departamentos', 'prefeitura', 'endereco'));
+        return view('app/departamentos/show', compact('departamento', 'idBrasao','secretarias', 'prefeitura', 'endereco'));
     }
 
     public function update($idPrefeitura, Request $request)
     {
-        $criticaSecretaria = Validator::make($request->all(), Secretaria::rules())->validate();
+        $criticaDepartamento = Validator::make($request->all(), Departamento::rules())->validate();
         $prefeitura = Prefeitura::where("id", $idPrefeitura)->get()[0]; 
         $dados = (object)$request->all();
        
-        $secretaria = Secretaria::where("id", $dados->id_secretaria)->update([
+        $departamento = Departamento::where("id", $dados->id_departamento)->update([
             "nome" => $dados->nome,
             "sigla" => $dados->sigla,
+            "id_secretaria" => $dados->id_secretaria
         ]);
 
-        return redirect()->back()->with('message', 'Secretaria atualizada com sucesso!');
+        return redirect()->back()->with('message', 'Departamento atualizado com sucesso!');
     }
 
-    public function delete($idPrefeitura, $idSecretaria)
+    public function delete($idPrefeitura, $idDepartamemto)
     {
-        Secretaria::where("id", $idSecretaria)->delete();
+        Departamento::where("id", $idDepartamemto)->delete();
 
-        return redirect("/prefeituras/".$idPrefeitura.'/organizacao')->with('message', 'Secretaria excluída com sucesso!');
+        return redirect("/prefeituras/".$idPrefeitura.'/organizacao')->with('message', 'Departamento excluída com sucesso!');
     }
 }

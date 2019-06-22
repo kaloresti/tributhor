@@ -1811,13 +1811,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1846,8 +1839,8 @@ __webpack_require__.r(__webpack_exports__);
           self.erro = true;
           $("#cep").focus();
         } else {
-          self.erro = false;
-          console.log(endereco);
+          self.erro = false; //console.log(endereco);
+
           self.endereco = endereco;
           $("#numero").focus();
         }
@@ -37325,7 +37318,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { id: "uf", name: "uf", type: "text" },
+          attrs: { readonly: "", id: "uf", name: "uf", type: "text" },
           domProps: { value: _vm.endereco.uf },
           on: {
             input: function($event) {
@@ -37335,13 +37328,7 @@ var render = function() {
               _vm.$set(_vm.endereco, "uf", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm.erro == true
-          ? _c("span", { staticClass: "badge badge-danger" }, [
-              _vm._v("CEP não localizado!")
-            ])
-          : _vm._e()
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-5" }, [
@@ -37357,7 +37344,12 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { id: "localidade", name: "localidade", type: "text" },
+          attrs: {
+            readonly: "",
+            id: "localidade",
+            name: "localidade",
+            type: "text"
+          },
           domProps: { value: _vm.endereco.localidade },
           on: {
             input: function($event) {
@@ -37367,13 +37359,7 @@ var render = function() {
               _vm.$set(_vm.endereco, "localidade", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm.erro == true
-          ? _c("span", { staticClass: "badge badge-danger" }, [
-              _vm._v("CEP não localizado!")
-            ])
-          : _vm._e()
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-5" }, [
@@ -37399,13 +37385,7 @@ var render = function() {
               _vm.$set(_vm.endereco, "bairro", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm.erro == true
-          ? _c("span", { staticClass: "badge badge-danger" }, [
-              _vm._v("CEP não localizado!")
-            ])
-          : _vm._e()
+        })
       ])
     ]),
     _vm._v(" "),
@@ -37435,13 +37415,7 @@ var render = function() {
               _vm.$set(_vm.endereco, "logradouro", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm.erro == true
-          ? _c("span", { staticClass: "badge badge-danger" }, [
-              _vm._v("CEP não localizado!")
-            ])
-          : _vm._e()
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-2" }, [
@@ -37467,13 +37441,7 @@ var render = function() {
               _vm.$set(_vm.endereco, "numero", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm.erro == true
-          ? _c("span", { staticClass: "badge badge-danger" }, [
-              _vm._v("CEP não localizado!")
-            ])
-          : _vm._e()
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-4" }, [
@@ -37501,13 +37469,7 @@ var render = function() {
               _vm.$set(_vm.endereco, "complemento", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm.erro == true
-          ? _c("span", { staticClass: "badge badge-danger" }, [
-              _vm._v("CEP não localizado!")
-            ])
-          : _vm._e()
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-2" }, [
@@ -37533,13 +37495,7 @@ var render = function() {
               _vm.$set(_vm.endereco, "ibge", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm.erro == true
-          ? _c("span", { staticClass: "badge badge-danger" }, [
-              _vm._v("CEP não localizado!")
-            ])
-          : _vm._e()
+        })
       ])
     ])
   ])

@@ -10,40 +10,33 @@
         <div class="form-row">
             <div class="form-group col-md-2">
                 <label class="font-weight-bold">UF</label>
-                <input id="uf" name="uf" v-model="endereco.uf" type="text" class="form-control" >
-                <span v-if="erro == true" class="badge badge-danger">CEP não localizado!</span>
+                <input readonly id="uf" name="uf" v-model="endereco.uf" type="text" class="form-control" >
             </div>
             <div class="form-group col-md-5">
                 <label class="font-weight-bold">Município</label>
-                <input id="localidade" name="localidade" v-model="endereco.localidade"  type="text" class="form-control" >
-                <span v-if="erro == true" class="badge badge-danger">CEP não localizado!</span>
+                <input readonly id="localidade" name="localidade" v-model="endereco.localidade"  type="text" class="form-control" >
             </div>
             <div class="form-group col-md-5">
                 <label class="font-weight-bold">Bairro</label>
                 <input id="bairro" name="bairro" v-model="endereco.bairro" type="text" class="form-control">
-                <span v-if="erro == true" class="badge badge-danger">CEP não localizado!</span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-4">
                <label class="font-weight-bold">Logradouro</label>
                <input id="logradouro" name="logradouro" v-model="endereco.logradouro"  type="text" class="form-control">
-               <span v-if="erro == true" class="badge badge-danger">CEP não localizado!</span>
             </div>
             <div class="form-group col-md-2">
                 <label class="font-weight-bold">Número</label>
                 <input id="numero" name="numero" v-model="endereco.numero" type="text" class="form-control">
-                <span v-if="erro == true" class="badge badge-danger">CEP não localizado!</span>
             </div>
             <div class="form-group col-md-4">
                 <label class="font-weight-bold">Complemento</label>
                 <input id="complemento" name="complemento" v-model="endereco.complemento"  type="text" class="form-control" >
-                <span v-if="erro == true" class="badge badge-danger">CEP não localizado!</span>
             </div>
              <div class="form-group col-md-2">
                 <label class="font-weight-bold">Ibge</label>
                 <input readonly id="ibge" name="ibge" v-model="endereco.ibge"  type="text" class="form-control disabled" >
-                <span v-if="erro == true" class="badge badge-danger">CEP não localizado!</span>
             </div>
         </div> 
     </div>     
@@ -79,7 +72,7 @@
                         $("#cep").focus();
                     }else {
                         self.erro = false;
-                        console.log(endereco);
+                        //console.log(endereco);
                         self.endereco = endereco;
                         $("#numero").focus();
                     }

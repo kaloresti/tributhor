@@ -2,7 +2,7 @@
 
 @section('content')
  
-<h3><i class="fas fa-chart-line"></i> Dashboard</h3>
+<h5><i class="fas fa-chart-line"></i> Dashboard</h5>
 <hr>   
 
 @endsection

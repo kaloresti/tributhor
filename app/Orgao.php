@@ -13,14 +13,15 @@ class Orgao extends Model
         "id_prefeitura",
         "nome",
         "id_brasao",
+        "id_endereco",
         "sigla",
     ];
 
-    public function rules()
+    static function rules()
     {
         return [
             'nome' => 'required',
-            'id_prefeitura' => 'required',
+            //'id_prefeitura' => 'required',
             'sigla' => 'required',
         ];
     }

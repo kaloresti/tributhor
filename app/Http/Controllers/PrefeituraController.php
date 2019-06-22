@@ -109,11 +109,31 @@ class PrefeituraController extends Controller
         foreach (Secretaria::defaults() as $secretaria)
         {
             $secretaria['id_prefeitura'] = $prefeitura->id;
+            
+            $brasao_secretaria = Brasao::create([
+                "nome" => "no-image.png",
+                "extensao" => "png",
+                "diretorio" => "brasoes",
+                "tamanho" => "0"
+            ]);
+
+            $endereco_secretaria = Endereco::create([
+                "cep" => $dados->cep,
+                "localidade" => $dados->localidade,
+                "uf" => $dados->uf,
+                "bairro" => $dados->bairro,
+                "logradouro" => $dados->logradouro,
+                "ibge" => $dados->ibge,
+                "numero" => $dados->numero,
+                "complemento" => $dados->complemento
+            ]);
+
             $createSecretaria = Secretaria::create([
                 "nome" => $secretaria['nome'],
                 "sigla" => $secretaria['sigla'],
-                "id_endereco" => $endereco->id,
-                "id_prefeitura" => $prefeitura->id
+                "id_endereco" => $endereco_secretaria->id,
+                "id_prefeitura" => $prefeitura->id,
+                "id_brasao" => $brasao_secretaria->id
             ]);
         
             if (count($secretaria['departamentos']) > 0)
@@ -159,8 +179,6 @@ class PrefeituraController extends Controller
 
     public function organizacao($id_prefeitura)
     {
-        $classSituacao = 'danger';
-        
         $prefeitura = DB::table("prefeitura")
                         ->leftJoin("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
                         ->leftJoin("brasao", "prefeitura_estilo.id_brasao", "=", "brasao.id")
@@ -169,22 +187,45 @@ class PrefeituraController extends Controller
                         ->where("prefeitura.id", "=", $id_prefeitura)
                         ->get()[0];
 
+        
         $secretarias = Secretaria::where("id_prefeitura", $prefeitura->id)->get();
+        
         $departamentos = DB::table("departamento")
                     ->leftJoin("secretaria", "secretaria.id", "=", "departamento.id_secretaria")
                     ->join("prefeitura", "prefeitura.id", "=", "departamento.id_prefeitura")
                     ->select("departamento.nome as departamento",
+                            "departamento.id as id_departamento",
                              "departamento.sigla as sigla_departamento", 
                              "secretaria.nome as secretaria")
                     ->where("prefeitura.id", "=", $id_prefeitura)
                     ->get();
-        $orgaos = Orgao::where("id_prefeitura", $prefeitura->id)->get();
-        $fundacoes = Fundacao::where("id_prefeitura", $prefeitura->id)->get();
+
+        $orgaos = DB::table("orgao")
+                    ->leftJoin("secretaria", "secretaria.id", "=", "orgao.id_secretaria")
+                    ->join("prefeitura", "prefeitura.id", "=", "orgao.id_prefeitura")
+                    ->select("orgao.nome as orgao",
+                            "orgao.id as id_orgao",
+                                "orgao.sigla as sigla_orgao", 
+                                "secretaria.nome as secretaria")
+                    ->where("prefeitura.id", "=", $id_prefeitura)
+                    ->get();
         
-        if($prefeitura->situacao == 'homologacao')
-            $classSituacao = "warning";
+        $fundacoes = DB::table("fundacao")
+                    ->leftJoin("secretaria", "secretaria.id", "=", "fundacao.id_secretaria")
+                    ->leftJoin("departamento", "departamento.id", "=", "fundacao.id_departamento")
+                    ->leftJoin("orgao", "orgao.id", "=", "fundacao.id_orgao")
+                    ->join("prefeitura", "prefeitura.id", "=", "fundacao.id_prefeitura")
+                    ->select("fundacao.nome as fundacao",
+                            "fundacao.id as id_fundacao",
+                                "fundacao.sigla as sigla_fundacao", 
+                                "secretaria.nome as secretaria",
+                                "departamento.nome as departamento",
+                                "orgao.nome as orgao")
+                    ->where("prefeitura.id", "=", $id_prefeitura)
+                    ->get();
         
-        return view('app/organizacao/index', compact('prefeitura', 'secretarias', 'departamentos', 'orgaos', 'fundacoes' , 'classSituacao'));
+        
+        return view('app/organizacao/index', compact('prefeitura', 'secretarias', 'departamentos', 'orgaos', 'fundacoes'));
 
     }
 }
