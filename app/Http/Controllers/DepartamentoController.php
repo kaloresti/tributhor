@@ -63,7 +63,9 @@ class DepartamentoController extends Controller
             'id_secretaria' => $idSecretaria,
         ]);
 
-        return redirect()->back()->with('message', 'Departamento cadastrado com sucesso!');
+        return redirect()->back()->with(
+            ['message' => 'Departamento cadastrado com sucesso!'],
+            ['tab' => 'departamento']);
     }
 
     public function show($idPrefeitura, $idDepartamemto)

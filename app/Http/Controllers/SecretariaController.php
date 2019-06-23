@@ -11,6 +11,8 @@ use App\Prefeitura;
 use App\Departamento;
 use App\Endereco;
 use App\Brasao;
+use App\Orgao;
+use App\Fundacao;
 
 class SecretariaController extends Controller
 {
@@ -57,7 +59,9 @@ class SecretariaController extends Controller
             "id_brasao" => $brasao->id,
         ]);
 
-        return redirect()->back()->with('message', 'Secretaria cadastrada com sucesso!');
+        return redirect()->back()->with(
+            ['message' => 'Secretaria cadastrada com sucesso!'],
+            ['tab' => 'secretaria']);
     }
 
     public function show($idPrefeitura, $idSecretaria)
@@ -83,8 +87,10 @@ class SecretariaController extends Controller
         $endereco = Endereco::where("id", $secretaria->id_endereco)->get()[0];
 
         $departamentos = Departamento::where('id_secretaria', $idSecretaria)->get();
+        $orgaos = Orgao::where('id_secretaria', $idSecretaria)->get();
+        $fundacoes = Fundacao::where('id_secretaria', $idSecretaria)->get();
 
-        return view('app/secretarias/show', compact('secretaria', 'idBrasao','departamentos', 'prefeitura', 'endereco'));
+        return view('app/secretarias/show', compact('secretaria', 'idBrasao','departamentos', 'orgaos', 'fundacoes', 'prefeitura', 'endereco'));
     }
 
     public function update($idPrefeitura, Request $request)

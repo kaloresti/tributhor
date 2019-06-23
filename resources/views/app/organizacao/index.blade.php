@@ -26,10 +26,10 @@
 <fieldset>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="pills-secretaria-tab" data-toggle="pill" href="#pills-secretaria" role="tab" aria-controls="pills-secretaria" aria-selected="true"><i class="fas fa-building"></i> Secretarias</a>
+            <a class="nav-link active" id="pills-secretaria-tab" data-toggle="pill" href="#pills-secretaria" role="tab" aria-controls="pills-secretaria" aria-selected="true"><i class="fas fa-building"></i> Secretarias</a>    
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="pills-departamento-tab" data-toggle="pill" href="#pills-departamento" role="tab" aria-controls="pills-departamento" aria-selected="false"> <i class="fas fa-store-alt"></i> Departamentos</a>
+            <a class="nav-link" id="pills-departamento-tab" data-toggle="pill" href="#pills-departamento" role="tab" aria-controls="pills-departamento" aria-selected="false"> <i class="fas fa-store-alt"></i> Departamentos</a>          
         </li>
         <li class="nav-item">
             <a class="nav-link" id="pills-orgao-tab" data-toggle="pill" href="#pills-orgao" role="tab" aria-controls="pills-orgao" aria-selected="false"> <i class="fas fa-store"></i> Órgãos</a>
@@ -38,13 +38,7 @@
             <a class="nav-link" id="pills-fundacao-tab" data-toggle="pill" href="#pills-fundacao" role="tab" aria-controls="pills-fundacao" aria-selected="false"> <i class="fas fa-landmark"></i> Fundações</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="pills-servidor-tab" data-toggle="pill" href="#pills-servidor" role="tab" aria-controls="pills-servidor" aria-selected="false"> <i class="fas fa-user-friends"></i> Servidores</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-receita-tab" data-toggle="pill" href="#pills-receita" role="tab" aria-controls="pills-receita" aria-selected="false"> <i class="fas fa-money-check-alt"></i> Receitas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-patrimonio-tab" data-toggle="pill" href="#pills-patrimonio" role="tab" aria-controls="pills-patrimonio" aria-selected="false"> <i class="fas fa-city"></i> Patrimonios</a>
+            <a class="nav-link" id="pills-patrimonio-tab" data-toggle="pill" href="#pills-patrimonio" role="tab" aria-controls="pills-patrimonio" aria-selected="false"> <i class="fas fa-city"></i> Patrimonios <span class="badge badge-warning">future</span></a>
         </li>
     </ul>
 
@@ -55,10 +49,10 @@
                     <simple-search-component></simple-search-component>
                 </div>
                 <div class="col-md-2">
-                    <a href="" class="btn btn-outline-info" data-toggle="modal" data-target="#modalCreateSecretaria"> <i class="fas fa-plus"></i> nova secretaria</a>
+                    <a href="" class="btn btn-outline-info col-md-12" data-toggle="modal" data-target="#modalCreateSecretaria"> <i class="fas fa-plus"></i> nova secretaria</a>
                 </div>
             </div>
-            <table class="table table-hover table-dashed table-bordered table-condensed">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -69,7 +63,7 @@
                 <tbody>
                     @forelse ($secretarias as $secretaria)
                     <tr>
-                        <td> <span class="text-uppercase"> <a href="/prefeitura/{{$prefeitura->id}}/secretarias/{{$secretaria->id}}/show" class="btn btn-link"><i class="fas fa-building"></i> {{$secretaria->nome}} </span></a></td>
+                        <td> <span class="text-uppercase"> <i class="fas fa-building"></i> {{$secretaria->nome}} </span></td>
                         <td>{{$secretaria->sigla}}</td>
                         <td>
                             <a href="/prefeitura/{{$prefeitura->id}}/secretarias/{{$secretaria->id}}/show" class="btn btn-outline-primary pull-right btn-sm"><i class="fas fa-folder-open"></i> abrir</a>
@@ -91,11 +85,11 @@
                     <simple-search-component></simple-search-component>
                 </div>
                 <div class="col-md-2">
-                    <a data-toggle="modal" data-target="#modalCreateDepartamento" href="" class="btn btn-outline-info"> <i class="fas fa-plus"></i> Novo Departamento</a>
+                    <a data-toggle="modal" data-target="#modalCreateDepartamento" href="" class="btn btn-outline-info col-md-12"> <i class="fas fa-plus"></i> Novo Departamento</a>
                 </div>
             </div>
             
-            <table class="table table-hover table-dashed table-bordered table-condensed">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -107,7 +101,7 @@
                 <tbody>
                     @forelse ($departamentos as $departamento)
                         <tr>
-                            <td>{{$departamento->departamento}}</td>
+                            <td class="text-uppercase">{{$departamento->departamento}}</td>
                             <td>{{$departamento->sigla_departamento}}</td>
                             <td>
                                 @if($departamento->secretaria)
@@ -137,11 +131,11 @@
                     <simple-search-component></simple-search-component>
                 </div>
                 <div class="col-md-2">
-                    <a href="" data-toggle="modal" data-target="#modalCreateOrgao"  class="btn btn-outline-info"> <i class="fas fa-plus"></i> Novo Órgão</a>
+                    <a href="" data-toggle="modal" data-target="#modalCreateOrgao"  class="btn btn-outline-info col-md-12"> <i class="fas fa-plus"></i> Novo Órgão</a>
                 </div>
             </div>
             
-            <table class="table table-hover table-dashed table-bordered table-condensed">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -182,11 +176,11 @@
                     <simple-search-component></simple-search-component>
                 </div>
                 <div class="col-md-2">
-                    <a href="" data-toggle="modal" data-target="#modalCreateFundacao"  class="btn btn-outline-info"> <i class="fas fa-plus"></i> Nova Fundação</a>
+                    <a href="" data-toggle="modal" data-target="#modalCreateFundacao"  class="btn btn-outline-info col-md-12"> <i class="fas fa-plus"></i> Nova Fundação</a>
                 </div>
             </div>
             
-            <table class="table table-hover table-dashed table-bordered table-condensed">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -237,10 +231,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane fade" id="pills-servidor" role="tabpanel" aria-labelledby="pills-servidor-tab">
-            <a href="" class="btn btn-outline-info"> <i class="fas fa-plus"></i> novo servidor</a>
-        </div>
-        <div class="tab-pane fade" id="pills-receita" role="tabpanel" aria-labelledby="pills-receita-tab">receitas</div>
         <div class="tab-pane fade" id="pills-patrimonio" role="tabpanel" aria-labelledby="pills-patrimonio-tab">patrimonios</div>
     </div>
 </fieldset> 
@@ -285,4 +275,5 @@
         </div>
     </div>
 </div>
+
 @endsection

@@ -65,39 +65,54 @@
         <hr>
         <div class="row">
             <div class="col-md-6">
-                <h5>Departamentos</h5>
-                @forelse ($departamentos as $departamento)
-                    <a class="link" href="">{{$departamento->nome}} - {{$departamento->sigla}}</a><br>
+                <h6>Departamentos</h6>
+                <ul class="list-group list-group-flush">
+                    @forelse ($departamentos as $departamento)
+                        <li class="list-group-item">
+                            <b class="text-uppercase">{{$departamento->nome}} - {{$departamento->sigla}}</b>
+                            <small>3 days ago</small>
+                        </li>
+                    @empty
+                        <div class="alert alert-warning">nenhum registro encontrado</div>  
+                    @endforelse
+                </ul><br>
+                <h6>Órgãos</h6>
+                <ul class="list-group list-group-flush">
+                    @forelse ($orgaos as $orgao)
+                        <li class="list-group-item">
+                            <b class="uppercase">{{$orgao->nome}} - {{$orgao->sigla}}</b>
+                            <small>3 days ago</small>
+                        </li>
+                        
+                    @empty
+                        <div class="alert alert-warning">nenhum registro encontrado</div>  
+                    @endforelse
+                </ul><br>
+                <h6>Servidores</h6>
+                @forelse ($fundacoes as $fundacao)
+                    <li class="list-group-item">
+                        <b class="uppercase">{{$fundacao->nome}} - {{$fundacao->sigla}}</b>
+                        <small>3 days ago</small>
+                    </li>
+                    
                 @empty
                     <div class="alert alert-warning">nenhum registro encontrado</div>  
                 @endforelse
+                <h6>Fundações</h6>
+                <ul class="list-group list-group-flush">
+                    @forelse ($fundacoes as $fundacao)
+                        <li class="list-group-item">
+                            <b class="uppercase">{{$fundacao->nome}} - {{$fundacao->sigla}}</b>
+                            <small>3 days ago</small>
+                        </li>
+                        
+                    @empty
+                        <div class="alert alert-warning">nenhum registro encontrado</div>  
+                    @endforelse
+                </ul>
             </div>
-            <div class="col-md-6">
-                <h5>Sintético de Arrecadação</h5>
-            </div>
-            <div class="col-md-6">
-                <h5>Órgãos</h5>
-                @forelse ($departamentos as $departamento)
-                    <a class="link" href="">{{$departamento->nome}} - {{$departamento->sigla}}</a><br>
-                @empty
-                    <div class="alert alert-warning">nenhum registro encontrado</div>  
-                @endforelse
-            </div>
-            <div class="col-md-6">
-                <h5>Fundações</h5>
-                @forelse ($departamentos as $departamento)
-                    <a class="link" href="">{{$departamento->nome}} - {{$departamento->sigla}}</a><br>
-                @empty
-                    <div class="alert alert-warning">nenhum registro encontrado</div>  
-                @endforelse
-            </div>
-            <div class="col-md-6">
-                <h5>Servidores</h5>
-                @forelse ($departamentos as $departamento)
-                    <a class="link" href="">{{$departamento->nome}} - {{$departamento->sigla}}</a><br>
-                @empty
-                    <div class="alert alert-warning">nenhum registro encontrado</div>  
-                @endforelse
+            <div class="col-md-6 shadow">
+                <h6>Sintético de Arrecadação</h6>
             </div>
         </div>
     </fieldset>

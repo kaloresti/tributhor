@@ -117,7 +117,7 @@
         </nav>
 
         <main class="py-4">
-            <div class="container-fluid">
+            <div class="container-fluid ">
                 <div class="row justify-content-center">
                     
                     <div id="mySidenav" class="sidenav">
@@ -133,13 +133,12 @@
                             </div>
                         </div>
                         <div class="row" style="text-align:center;">
-                            <div class="col-md-12">
+                            <div class="col-md-12"><br>
                                 <b style="color:grey" class="text-uppercase">{{$prefeitura->nome}} - {{$prefeitura->uf}}</b><br>
                                 <b style="color:grey" ><i class="fas fa-user"></i> {{ Auth::user()->name }}</b> 
                             </div>
                         </div><br>
                         <div class="row" style="text-align:center; padding: 5px 5px 5px 5px;">
-                            
                                 <div class="col-md-4">
                                     <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-chart-line"></i></button>
                                 </div>
@@ -147,28 +146,35 @@
                                     <button title="Estrutura Física do Município"  class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/organizacao') }}'"><i class="fas fa-sitemap"></i> </button> 
                                 </div>
                                 <div class="col-md-4">
-                                <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-briefcase"></i></i></button>
+                                <button title="Receitas Municipais" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeitura/'.$prefeitura->id.'/receitas') }}'"><i class="fas fa-cash-register"></i></button>
                                 </div>
-                          
                         </div>
                         <div class="row" style="text-align:center; padding: 5px 5px 5px 5px;">
-                            
                                 <div class="col-md-4">
-                                    <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-house-damage"></i></button>
+                                    <button title="Servidores e Funcionários" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeitura/'.$prefeitura->id.'/servidores/list') }}'"><i class="fas fa-users"></i></button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button title="Estrutura Física do Município"  class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/organizacao') }}'"><i class="fas fa-file-invoice-dollar"></i> </button> 
+                                    <button title="Cadastro Mobiliário"  class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeitura/'.$prefeitura->id.'/mobiliaria') }}'"><i class="fas fa-briefcase"></i> </button> 
                                 </div>
                                 <div class="col-md-4">
-                                <button title="Dashboard" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeituras/'.$prefeitura->id.'/show') }}'"><i class="fas fa-receipt"></i></i></button>
+                                    <button title="Cadastro de Imóveis" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeitura/'.$prefeitura->id.'/imobiliaria') }}'"><i class="fas fa-warehouse"></i></i></button>
                                 </div>
-                          
+                        </div>
+                        <div class="row" style="text-align:center; padding: 5px 5px 5px 5px;">  
+                                <div class="col-md-4">
+                                    <button title="Arrecadação" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeitura/'.$prefeitura->id.'/arrecadacao') }}'"><i class="fas fa-money-bill-wave"></i></button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button title="Nota Fiscal de Serviços Eletrônica"  class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeitura/'.$prefeitura->id.'/nfse') }}'"><i class="fas fa-file-invoice-dollar"></i> </button> 
+                                </div>
+                                <div class="col-md-4">
+                                     <button title="Relatórios" class="btn btn-outline-secondary btn-lg col-md-12" onclick="location.href='{{ url('/prefeitura/'.$prefeitura->id.'/relatorios') }}'"><i class="fas fa-file-alt"></i></button>
+                                </div>
                         </div>
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                        
                     </div>
-                    <div class="col-lg-10">
-                       
+                    <div class="col-lg-10 shadow">
+                       <br>
                         @yield('content')
                         
                         

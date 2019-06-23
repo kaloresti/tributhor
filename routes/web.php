@@ -55,5 +55,12 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::post('/prefeitura/{id_prefeitura}/fundacoes/update', 'FundacaoController@update')->name('atualizar_fundacao');
     Route::get('/prefeitura/{id_prefeitura}/fundacoes/{id_fundacao}/show', 'FundacaoController@show')->name('mostrar_fundacao');
     Route::get('/prefeitura/{id_prefeitura}/fundacoes/{id_fundacao}/delete', 'FundacaoController@delete')->name('excluir_fundacao');
+
+    // -- Servidores
+    Route::post('/prefeitura/{id_prefeitura}/servidores/store', 'ServidorController@store')->name('gravar_servidor');
+    Route::post('/prefeitura/{id_prefeitura}/servidores/update', 'ServidorController@update')->name('atualizar_servidor');
+    Route::get('/prefeitura/{id_prefeitura}/servidores/{id_servidor}/show', 'ServidorController@show')->name('mostrar_servidor');
+    Route::get('/prefeitura/{id_prefeitura}/servidores/list', 'ServidorController@list')->name('listar_servidor');
+    Route::get('/prefeitura/{id_prefeitura}/servidores/{id_servidor}/delete', 'ServidorController@delete')->name('excluir_servidor');
 });
 
