@@ -12,9 +12,13 @@ class CreateServidorTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {    
         Schema::create('servidor', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('id_pessoa_fisica');
+            $table->string('email');
+            $table->string('matricula');
+            $table->string('grau_escolaridade');
             $table->timestamps();
         });
     }

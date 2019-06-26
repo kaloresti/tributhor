@@ -112,7 +112,8 @@
                 </ul>
             </div>
             <div class="col-md-6 shadow">
-                <h6>Sintético de Arrecadação</h6>
+                <h6>Sintético de registros vinculados</h6>
+                <bar-chart-component></bar-chart-component>
             </div>
         </div>
     </fieldset>

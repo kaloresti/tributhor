@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use Validator;
 use App\Brasao;
 use App\PrefeituraEstilo;
@@ -223,8 +224,7 @@ class PrefeituraController extends Controller
                                 "orgao.nome as orgao")
                     ->where("prefeitura.id", "=", $id_prefeitura)
                     ->get();
-        
-        
+
         return view('app/organizacao/index', compact('prefeitura', 'secretarias', 'departamentos', 'orgaos', 'fundacoes'));
 
     }

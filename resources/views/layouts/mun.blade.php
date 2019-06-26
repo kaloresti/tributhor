@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+   
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -18,6 +19,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- cdn includes -->
     <script src="https://kit.fontawesome.com/9807372c65.js"></script>
 </head>
 
@@ -190,8 +193,14 @@
     </div>
 </body>
 
-
 <script>
+$( "form" ).submit(function( event ) {
+  console.log(event);
+
+  alert('fiz um sibmit');
+  event.preventDefault();
+});
+
 function openNav() {
   document.getElementById("mySidenav").style.width = "450px";
 }
@@ -199,6 +208,7 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
+
 </script>
 
 </html>

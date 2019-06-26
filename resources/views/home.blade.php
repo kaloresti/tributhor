@@ -13,6 +13,11 @@
         <legend>
             Dashboard
         </legend>
+        <bar-chart-component></bar-chart-component>
+
+            
     </fieldset>
-    
+   
+   
 @endsection
+
