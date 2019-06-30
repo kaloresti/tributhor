@@ -48,8 +48,30 @@ class ServidorController extends Controller
         $servidores = DB::table('servidor')
                     ->join('pessoa_fisica', 'pessoa_fisica.id', 'servidor.id_pessoa_fisica')
                     ->join('alocacao', 'alocacao.id_servidor', 'servidor.id')
+                    ->leftJoin('secretaria' , 'secretaria.id', 'alocacao.id_secretaria')
+                    ->leftJoin('departamento' , 'departamento.id', 'alocacao.id_departamento')
+                    ->leftJoin('orgao' , 'orgao.id', 'alocacao.id_orgao')
+                    ->leftJoin('fundacao' , 'fundacao.id', 'alocacao.id_fundacao')
+                    ->leftJoin('situacao_funcional' , 'situacao_funcional.id', 'alocacao.id_situacao_funcional')
+                    ->leftJoin('situacao_cadastral' , 'situacao_cadastral.id', 'alocacao.id_situacao_cadastral')
+                    ->join('cargo' , 'cargo.id', 'alocacao.id_cargo')
+                    ->join('perfil' , 'perfil.id', 'alocacao.id_perfil')
                     ->join('endereco', 'pessoa_fisica.id_endereco', 'endereco.id')
-                    ->select('pessoa_fisica.*')
+                    ->select('pessoa_fisica.nome as servidor',
+                             'pessoa_fisica.cpf as cpf',
+                             'pessoa_fisica.rg as rg',
+                             'pessoa_fisica.nascido_em as nascido_em',
+                             'servidor.*',
+                             'endereco.*',
+                             'cargo.nome as cargo',
+                             'perfil.nome as perfil',
+                             'secretaria.nome as secretaria',
+                             'departamento.nome as departamento',
+                             'orgao.nome as orgao',
+                             'fundacao.nome as fundacao',
+                             'alocacao.*',
+                             'situacao_cadastral.nome as situacao_cadastral',
+                             'situacao_funcional.nome as situacao_funcional')
                     ->where('alocacao.id_prefeitura', "=", $idPrefeitura)
                     ->get();
         //dd($servidores);

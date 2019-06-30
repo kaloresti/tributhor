@@ -41,16 +41,41 @@
                         <img class="img-circle" width="150" height="150" src="{{ asset('storage/brasoes/no-image.png')}}" alt="">
                     </td>
                     <td style="width:50%">
-                        <h3 class="text-uppercase"> <i class="fa fa-user"></i> {{$servidor->nome}}</h3>
-                        <small><i class="fas fa-envelope"></i> 
-                           
+                        <h3 class="text-uppercase"> <i class="fa fa-user"></i> {{$servidor->servidor}}</h3>
+                        <small><i class="fas fa-envelope"> </i> 
+                            {{$servidor->email}}
+                        </small><br>
+                        <small><i class="fas fa-envelope"> </i> 
+                            Cargo: {{$servidor->cargo}}
+                        </small><br>
+                        <small>Perfil: <span class="badge badge-primary"><i class="fas fa-envelope"> </i> 
+                            {{$servidor->perfil}}</span> 
+                        </small><br>
+                        <small>Situação Funcional: <span class="badge badge-primary"><i class="fas fa-envelope"> </i> 
+                            {{$servidor->situacao_funcional}}</span> 
                         </small><br>
                         <small> <i class="fas fa-map-marker-alt"></i> 
-                          
+                            {{$servidor->cep}} - {{$servidor->localidade}} - {{$servidor->uf}}, {{$servidor->logradouro}} - {{$servidor->numero}}, {{$servidor->complemento}}, {{$servidor->bairro}}
                         </small>
                     </td>
                     <td style="width:30%">
-                        alocação e situação funcional
+                        <b>alocação</b>   <br>
+                        <small><i class="fas fa-envelope"> </i> 
+                            {{$servidor->secretaria}}
+                        </small><br>
+                        <small><i class="fas fa-envelope"> </i> 
+                            {{$servidor->departamento}}
+                        </small><br>
+                        <small><i class="fas fa-envelope"> </i> 
+                            {{$servidor->orgao}}
+                        </small><br>
+                        <small><i class="fas fa-envelope"> </i> 
+                            {{$servidor->fundacao}}
+                        </small><br>
+                        <small><i class="fas fa-envelope"> </i> 
+                            {{$servidor->situacao_cadastral}}
+                        </small><br>
+
                     </td>
                     <td></td>
                 </tr>
