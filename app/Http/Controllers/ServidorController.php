@@ -190,4 +190,56 @@ class ServidorController extends Controller
 
         //dd($dados);
     }
+
+    public function show($idPrefeitura, $idServidor)
+    {
+        $prefeitura = DB::table("prefeitura")
+            ->leftJoin("prefeitura_estilo", "prefeitura.id_prefeitura_estilo", "=", "prefeitura_estilo.id")
+            ->leftJoin("brasao", "prefeitura_estilo.id_brasao", "=", "brasao.id")
+            ->join("endereco", "endereco.id", "=", "prefeitura.id_endereco")
+            ->select("prefeitura.*", "endereco.uf","endereco.cep" ,"endereco.ibge","endereco.bairro","endereco.logradouro", "endereco.localidade", "brasao.nome as arquivo", "brasao.diretorio", "brasao.extensao")
+            ->where("prefeitura.id", "=", $idPrefeitura)
+            ->get()[0];
+
+        $servidor = DB::table('servidor')
+            ->join('pessoa_fisica', 'pessoa_fisica.id', 'servidor.id_pessoa_fisica')
+            ->join('alocacao', 'alocacao.id_servidor', 'servidor.id')
+            ->leftJoin('secretaria' , 'secretaria.id', 'alocacao.id_secretaria')
+            ->leftJoin('departamento' , 'departamento.id', 'alocacao.id_departamento')
+            ->leftJoin('orgao' , 'orgao.id', 'alocacao.id_orgao')
+            ->leftJoin('fundacao' , 'fundacao.id', 'alocacao.id_fundacao')
+            ->leftJoin('situacao_funcional' , 'situacao_funcional.id', 'alocacao.id_situacao_funcional')
+            ->leftJoin('situacao_cadastral' , 'situacao_cadastral.id', 'alocacao.id_situacao_cadastral')
+            ->join('cargo' , 'cargo.id', 'alocacao.id_cargo')
+            ->join('perfil' , 'perfil.id', 'alocacao.id_perfil')
+            //->join('endereco', 'pessoa_fisica.id_endereco', 'endereco.id')
+            ->select('pessoa_fisica.nome as servidor',
+                'pessoa_fisica.id as id_endereco',
+                'pessoa_fisica.cpf as cpf',
+                'pessoa_fisica.rg as rg',
+                'pessoa_fisica.nascido_em as nascido_em',
+                'servidor.*',
+                'servidor.id as id_servidor',
+                //'endereco.*',
+                'cargo.nome as cargo',
+                'perfil.nome as perfil',
+                'secretaria.id as id_secretaria',
+                'secretaria.nome as secretaria',
+                'departamento.id as id_departamento',
+                'departamento.nome as departamento',
+                'orgao.id as id_orgao',
+                'orgao.nome as orgao',
+                'fundacao.id as id_fundacao',
+                'fundacao.nome as fundacao',
+                'alocacao.*',
+                'situacao_cadastral.nome as situacao_cadastral',
+                'situacao_funcional.nome as situacao_funcional')
+            ->where('alocacao.id_prefeitura', "=", $idPrefeitura)
+            ->where('alocacao.id_servidor', '=', $idServidor)
+            ->get()[0];
+
+        $endereco = Endereco::where('id', $servidor->id_endereco)->get()[0];
+
+        return view('app/servidores/show', compact('prefeitura', 'servidor', 'endereco'));
+    }
 }

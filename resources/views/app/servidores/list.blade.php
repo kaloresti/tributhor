@@ -117,7 +117,7 @@
                                 </span>
                             @endif
                         </small><br>
-                        <a href="" class="btn btn-outline-primary btn-sm">
+                        <a href="/prefeitura/{{$prefeitura->id}}/servidores/{{$servidor->id_servidor}}/show" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-folder-open"></i> detalhes
                         </a>
                     </td>
