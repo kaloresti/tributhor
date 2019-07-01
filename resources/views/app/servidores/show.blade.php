@@ -55,15 +55,15 @@
     </fieldset>
 
     <!-- Modal -->
-{{--    <div class="modal fade" id="modalEditEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
-{{--        <div class="modal-dialog modal-xl" role="document">--}}
-{{--            <div class="modal-content modal-xl">--}}
-{{--                <div class="modal-body modal-xl">--}}
-{{--                    @include('app.endereco.edit')--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+    <div class="modal fade" id="modalEditEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content modal-xl">
+                <div class="modal-body modal-xl">
+                    @include('app.endereco.edit')
+                </div>
+            </div>
+        </div>
+    </div>
 
 {{--    <div class="modal fade" id="modalEditBrasao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
 {{--        <div class="modal-dialog modal-sm" role="document">--}}
