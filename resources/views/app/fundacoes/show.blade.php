@@ -101,7 +101,8 @@
                         <div class="col-md-12">
                             <br>
                             <button type="submit" class="btn btn-outline-success btn-lg"><i class="fas fa-sync-alt"></i> salvar</button>
-                            @if($fundacao->id_secretaria != null)
+                            @if($fundacao->id_secretaria != null || $fundacao->id_departamento != null || $fundacao->id_orgao
+                                || count($servidores) > 0 )
                                 <button title="Existem registros vinculados à este fundacao, portanto não pode ser excluido" disabled="true" class="btn btn-outline-danger disabled" type="button"><i class="fas fa-trash"></i> </button>
                             @else
                                 <a href="/prefeitura/{{$prefeitura->id}}/fundacoes/{{$fundacao->id_fundacao}}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i> </a>
@@ -115,8 +116,17 @@
         <hr>
         <div class="row">
             <div class="col-md-6">
-               
-            
+               <h6>Servidores</h6>
+                <ul class="list-group list-group-flush">
+                    @forelse ($servidores as $servidor)
+                        <li class="list-group-item">
+                            <b class="text-uppercase">{{$servidor->nome}} - {{$servidor->cargo}}</b>
+                            <small>3 days ago</small>
+                        </li>
+                    @empty
+                        <div class="alert alert-warning">nenhum registro encontrado</div>
+                    @endforelse
+                </ul>
             </div>
             <div class="col-md-6">
                 

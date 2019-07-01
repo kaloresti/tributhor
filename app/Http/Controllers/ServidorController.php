@@ -65,9 +65,13 @@ class ServidorController extends Controller
                              'endereco.*',
                              'cargo.nome as cargo',
                              'perfil.nome as perfil',
+                             'secretaria.id as id_secretaria',
                              'secretaria.nome as secretaria',
+                             'departamento.id as id_departamento',
                              'departamento.nome as departamento',
+                             'orgao.id as id_orgao',
                              'orgao.nome as orgao',
+                             'fundacao.id as id_fundacao',
                              'fundacao.nome as fundacao',
                              'alocacao.*',
                              'situacao_cadastral.nome as situacao_cadastral',
@@ -91,14 +95,16 @@ class ServidorController extends Controller
     public function store($idPrefeitura, Request $request)
     {
         $dados = (object) $request->all();
-        //$criticaPrefeitura = Validator::make($request->all(), Prefeitura::rules())->validate();
+
         // -- validações
-        $criticaPessoaFisica = Validator::make($request->all(), PessoaFisica::rules())->validate();
-        $criticaEndereco = Validator::make($request->all(), Endereco::rules())->validate();
-        $criticaSituacaoFuncional = Validator::make($request->all(), SituacaoFuncional::rules())->validate();
-        $criticaSituacaoCadastral = Validator::make($request->all(), SituacaoCadastral::rules())->validate();
+        Validator::make($request->all(), PessoaFisica::rules())->validate();
+        Validator::make($request->all(), Endereco::rules())->validate();
+        Validator::make($request->all(), SituacaoFuncional::rules())->validate();
+        Validator::make($request->all(), SituacaoCadastral::rules())->validate();
 
         // critica alocação dupla na prefeitura
+
+
 
         // cpf unico
         $cpfUnico = PessoaFisica::where('cpf', $dados->cpf)->get();
@@ -180,8 +186,8 @@ class ServidorController extends Controller
                     }
                 }
             } 
-        } 
-        
-        dd($dados);
+        }
+
+        //dd($dados);
     }
 }

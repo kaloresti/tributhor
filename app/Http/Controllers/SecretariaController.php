@@ -13,6 +13,7 @@ use App\Endereco;
 use App\Brasao;
 use App\Orgao;
 use App\Fundacao;
+use App\Servidor;
 
 class SecretariaController extends Controller
 {
@@ -90,7 +91,15 @@ class SecretariaController extends Controller
         $orgaos = Orgao::where('id_secretaria', $idSecretaria)->get();
         $fundacoes = Fundacao::where('id_secretaria', $idSecretaria)->get();
 
-        return view('app/secretarias/show', compact('secretaria', 'idBrasao','departamentos', 'orgaos', 'fundacoes', 'prefeitura', 'endereco'));
+        $servidores = DB::table('servidor')
+            ->join('alocacao', 'alocacao.id_servidor', "=", 'servidor.id')
+            ->join('cargo', 'alocacao.id_cargo', "=", 'cargo.id')
+            ->join('pessoa_fisica', 'pessoa_fisica.id', "=", 'servidor.id_pessoa_fisica')
+            ->select('pessoa_fisica.*', 'cargo.nome as cargo')
+            ->where('alocacao.id_secretaria', $idSecretaria)
+            ->get();
+
+        return view('app/secretarias/show', compact('secretaria', 'servidores','idBrasao','departamentos', 'orgaos', 'fundacoes', 'prefeitura', 'endereco'));
     }
 
     public function update($idPrefeitura, Request $request)

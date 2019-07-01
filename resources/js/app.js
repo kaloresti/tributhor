@@ -26,6 +26,7 @@ Vue.component('file-image-component', require('./components/FileImageComponent.v
 Vue.component('color-component', require('./components/ColorComponent.vue').default);
 Vue.component('simple-search-component', require('./components/SimpleSearchComponent.vue').default);
 Vue.component('bar-chart-component', require('./components/BarChartComponent.vue').default);
+Vue.component('input-tel-component', require('./components/InputTelComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

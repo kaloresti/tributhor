@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Fundacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -91,9 +92,16 @@ class OrgaoController extends Controller
 
         $endereco = Endereco::where("id", $orgao->id_endereco)->get()[0];
 
-        //$orgaos = orgao::where('id_secretaria', $idSecretaria)->get();
+        $servidores = DB::table('servidor')
+            ->join('alocacao', 'alocacao.id_servidor', "=", 'servidor.id')
+            ->join('cargo', 'alocacao.id_cargo', "=", 'cargo.id')
+            ->join('pessoa_fisica', 'pessoa_fisica.id', "=", 'servidor.id_pessoa_fisica')
+            ->select('pessoa_fisica.*', 'cargo.nome as cargo')
+            ->where('alocacao.id_orgao', $idOrgao)
+            ->get();
 
-        return view('app/orgaos/show', compact('orgao', 'idBrasao','secretarias', 'prefeitura', 'endereco'));
+        $fundacoes = Fundacao::where('id_orgao', $idOrgao)->get();
+        return view('app/orgaos/show', compact('orgao', 'servidores', 'fundacoes', 'idBrasao','secretarias', 'prefeitura', 'endereco'));
     }
 
     public function update($idPrefeitura, Request $request)

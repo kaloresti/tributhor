@@ -65,7 +65,7 @@
                 <div class="col-md-3">
                     <br>
                     <button type="submit" class="btn btn-outline-success btn-lg"><i class="fas fa-sync-alt"></i> salvar</button>
-                    @if($orgao->id_secretaria != null)
+                    @if($orgao->id_secretaria != null || count($fundacoes) > 0 || count($servidores) > 0)
                         <button title="Existem registros vinculados à este orgao, portanto não pode ser excluido" disabled="true" class="btn btn-outline-danger disabled" type="button"><i class="fas fa-trash"></i> </button>
                     @else
                         <a href="/prefeitura/{{$prefeitura->id}}/orgaos/{{$orgao->id_orgao}}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i> </a>
@@ -76,12 +76,30 @@
         <hr>
         <div class="row">
             <div class="col-md-6">
-                <h5>Fundações</h5>
-            
+                <h6>Fundações</h6>
+                <ul class="list-group list-group-flush">
+                    @forelse ($fundacoes as $fundacao)
+                        <li class="list-group-item">
+                            <b class="text-uppercase">{{$fundacao->nome}} - {{$fundacao->sigla}}</b>
+                            <small>3 days ago</small>
+                        </li>
+                    @empty
+                        <div class="alert alert-warning">nenhum registro encontrado</div>
+                    @endforelse
+                </ul>
             </div>
             <div class="col-md-6">
-                <h5>Servidores</h5>
-                
+                <h6>Servidores</h6>
+                <ul class="list-group list-group-flush">
+                    @forelse ($servidores as $servidor)
+                        <li class="list-group-item">
+                            <b class="text-uppercase">{{$servidor->nome}} - {{$servidor->cargo}}</b>
+                            <small>3 days ago</small>
+                        </li>
+                    @empty
+                        <div class="alert alert-warning">nenhum registro encontrado</div>
+                    @endforelse
+                </ul>
             </div>
         </div>
     </fieldset>

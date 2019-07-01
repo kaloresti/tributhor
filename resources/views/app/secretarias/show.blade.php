@@ -52,7 +52,7 @@
                 <div class="col-md-2">
                     <br>
                     <button type="submit" class="btn btn-outline-success btn-lg"><i class="fas fa-sync-alt"></i> salvar</button>
-                    @if(count($departamentos) > 0)
+                    @if(count($departamentos) > 0 || count($orgaos) > 0 || count($fundacoes) > 0 || count($servidores) > 0)
                         <button title="Existem registros vinculados à esta secretaria, portanto não pode ser excluida" disabled="true" class="btn btn-outline-danger disabled" type="button"><i class="fas fa-trash"></i> </button>
                     @else
                         <a href="/prefeitura/{{$prefeitura->id}}/secretarias/{{$secretaria->id_secretaria}}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i> </a>
@@ -65,6 +65,17 @@
         <hr>
         <div class="row">
             <div class="col-md-6">
+                <h6>Servidores</h6>
+                <ul class="list-group list-group-flush">
+                    @forelse ($servidores as $servidor)
+                        <li class="list-group-item">
+                            <b class="text-uppercase">{{$servidor->nome}} - {{$servidor->cargo}}</b>
+                            <small>3 days ago</small>
+                        </li>
+                    @empty
+                        <div class="alert alert-warning">nenhum registro encontrado</div>
+                    @endforelse
+                </ul><br>
                 <h6>Departamentos</h6>
                 <ul class="list-group list-group-flush">
                     @forelse ($departamentos as $departamento)
@@ -80,7 +91,7 @@
                 <ul class="list-group list-group-flush">
                     @forelse ($orgaos as $orgao)
                         <li class="list-group-item">
-                            <b class="uppercase">{{$orgao->nome}} - {{$orgao->sigla}}</b>
+                            <b class="text-uppercase">{{$orgao->nome}} - {{$orgao->sigla}}</b>
                             <small>3 days ago</small>
                         </li>
                         
@@ -88,21 +99,11 @@
                         <div class="alert alert-warning">nenhum registro encontrado</div>  
                     @endforelse
                 </ul><br>
-                <h6>Servidores</h6>
-                @forelse ($fundacoes as $fundacao)
-                    <li class="list-group-item">
-                        <b class="uppercase">{{$fundacao->nome}} - {{$fundacao->sigla}}</b>
-                        <small>3 days ago</small>
-                    </li>
-                    
-                @empty
-                    <div class="alert alert-warning">nenhum registro encontrado</div>  
-                @endforelse
                 <h6>Fundações</h6>
                 <ul class="list-group list-group-flush">
                     @forelse ($fundacoes as $fundacao)
                         <li class="list-group-item">
-                            <b class="uppercase">{{$fundacao->nome}} - {{$fundacao->sigla}}</b>
+                            <b class="text-uppercase">{{$fundacao->nome}} - {{$fundacao->sigla}}</b>
                             <small>3 days ago</small>
                         </li>
                         

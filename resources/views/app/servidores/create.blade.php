@@ -34,8 +34,11 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold" for="">Sexo</label>
-                    <input type="text" maxlenght="10" name="sexo" class="form-control input-lg" id="sexo" required="required" />
-                    
+                    <select name="sexo" id="sexo" class="form-control">
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                        <option value="O">Outros</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">Nome do Pai</label>
@@ -49,23 +52,44 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold" for="">Etnia</label>
-                    <input type="text" maxlenght="10" name="etnia" class="form-control input-lg" id="etnia" />
+                    <select name="etnia" id="etnia" class="form-control">
+                        <option value="branco">Branco</option>
+                        <option value="negro">Negro</option>
+                        <option value="indigena">Indígena</option>
+                        <option value="caboclo">Caboclo</option>
+                        <option value="pardo">Pardo</option>
+                        <option value="mulato">Mulato</option>
+                        <option value="cafuzo">Cafuzo</option>
+                    </select>
                     
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">Telefone</label>
-                    <input type="text" name="tel" class="form-control" id="tel" >
+                    <input type="tel" name="tel" class="form-control" id="tel" >
+                    <input-tel-component></input-tel-component>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">Celular</label>
-                    <input type="text" name="cel" class="form-control" id="cel">
+                    <input type="tel" name="cel" class="form-control" id="cel">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold" for="">Grau Escolaridade</label>
-                    <input type="text" maxlenght="10" name="grau_escolaridade" class="form-control input-lg" id="grau_escolaridade" />
-                    
+                    <select name="grau_escolaridade" id="grau_escolaridade" class="form-control">
+                        <option value="fundamental_incompleto">Fundamental - Incompleto</option>
+                        <option value="fundamental_completo">Fundamental - Completo</option>
+                        <option value="medio_incompleto">Médio - Incompleto</option>
+                        <option value="medio_completo">Médio - Completo</option>
+                        <option value="superior_incompleto">Superior - Incompleto</option>
+                        <option value="superior_completo">Superior - Completo</option>
+                        <option value="pos_latu_incompleto">Pós-graduação (Lato senso) - Incompleto</option>
+                        <option value="pos_latu_completo">Pós-graduação (Lato senso) - Completo</option>
+                        <option value="mes_str_incompleto">Pós-graduação (Stricto sensu, nível mestrado) - Incompleto</option>
+                        <option value="mes_str_completo">Pós-graduação (Stricto sensu, nível mestrado) - Completo</option>
+                        <option value="doc_str_incompleto">Pós-graduação (Stricto sensu, nível doutor) - Incompleto</option>
+                        <option value="doc_str_completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
+                    </select>
                 </div>
                 <!-- <div class="form-group col-md-4">
                     <label class="font-weight-bold">Telefone</label>
@@ -110,7 +134,7 @@
                     <select name="id_departamento" id="id_departamento" class="form-control">
                         <option  value="-1">Não vinculado</option>
                         @foreach($departamentos as $departamento)
-                            <option value="{{$departamento->id_departamento}}">{{$departamento->departamento}}</option>
+                            <option value="{{$departamento->id}}">{{$departamento->nome}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -121,7 +145,7 @@
                     <select name="id_orgao" id="id_orgao" class="form-control">
                         <option  value="-1">Não vinculado</option>
                         @foreach($orgaos as $orgao)
-                            <option value="{{$orgao->id_orgao}}">{{$orgao->orgao}}</option>
+                            <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -143,7 +167,6 @@
                 <label class="font-weight-bold" for="">Cargo</label>
                 <div id="cp2" class="input-group" title="Using input value">
                     <select name="id_cargo" id="id_cargo" class="form-control">
-                        <option  value="-1">Não vinculado</option>
                         @foreach($cargos as $cargo)
                             <option value="{{$cargo->id}}">{{$cargo->nome}}</option>
                         @endforeach
@@ -154,7 +177,6 @@
                 <label class="font-weight-bold" for="">Situação funcional</label>
                 <div id="cp2" class="input-group" title="Using input value">
                     <select name="id_situacao_funcional" id="id_situacao_funcional" class="form-control" required="required">
-                        <option  value="-1">Não vinculado</option>
                         @foreach($situacoesFuncionais as $funcional)
                             <option value="{{$funcional->id}}">{{$funcional->nome}}</option>
                         @endforeach
@@ -166,8 +188,7 @@
             <div class="form-group col-md-4">
                 <label class="font-weight-bold" for="">Situação cadastral</label>
                 <div id="cp2" class="input-group" title="Using input value">
-                    <select name="id_situacao_cadastral" id="id_orgao" class="form-control" required="required">
-                        <option  value="-1">Não vinculado</option>
+                    <select name="id_situacao_cadastral" id="id_situacao_cadastral" class="form-control" required="required">
                         @foreach($situacoesCadastrais as $cadastral)
                                 <option value="{{$cadastral->id}}">{{$cadastral->nome}}</option>
                             @endforeach
@@ -181,12 +202,7 @@
             <!-- <div class="form-group col-md-4">
                 <label class="font-weight-bold" for="">Órgão</label>
                 <div id="cp2" class="input-group" title="Using input value">
-                    <select name="id_orgao" id="id_orgao" class="form-control">
-                        <option  value="-1">Função</option>
-                        @foreach($orgaos as $orgao)
-                            <option value="{{$orgao->id_orgao}}">{{$orgao->orgao}}</option>
-                        @endforeach
-                    </select>
+
                 </div>
             </div> -->
         </div>
@@ -203,7 +219,7 @@
                 <div class="form-group col-md-12">
                     <label class="font-weight-bold" for=""> Perfil de acesso </label>
                     <div id="cp2" class="input-group" title="Using input value">
-                        <select name="id_perfil" id="id_perfil" class="form-control" required="required">
+                        <select name="id_perfil" id="id_perfil" class="form-control col-md-4" required="required">
                             <option  value="-1">Não vinculado</option>
                             @foreach($perfis as $perfil)
                                 <option value="{{$perfil->id}}">{{$perfil->nome}}</option>

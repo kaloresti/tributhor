@@ -22,6 +22,8 @@
 
     <!-- cdn includes -->
     <script src="https://kit.fontawesome.com/9807372c65.js"></script>
+
+
 </head>
 
 <body>
@@ -179,7 +181,7 @@
                     <div class="col-lg-10 shadow">
                        <br>
                         @yield('content')
-                        
+                        <br>
                         
                         <nav class="navbar fixed-bottom navbar-light bg-light">
                         &copy 2019 Tributhor - Sistema de Automação em Arrecadação Municipal 
@@ -194,13 +196,6 @@
 </body>
 
 <script>
-$( "form" ).submit(function( event ) {
-  console.log(event);
-
-  alert('fiz um sibmit');
-  event.preventDefault();
-});
-
 function openNav() {
   document.getElementById("mySidenav").style.width = "450px";
 }
@@ -208,7 +203,6 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
-
 </script>
 
 </html>

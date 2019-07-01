@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
+use App\Fundacao;
 use App\Secretaria;
 use App\Prefeitura;
 use App\Departamento;
@@ -26,7 +27,8 @@ class DepartamentoController extends Controller
 
     public function store($idPrefeitura, Request $request)
     {
-        $criticaDepartamento = Validator::make($request->all(), Departamento::rules())->validate();
+        Validator::make($request->all(), Departamento::rules())->validate();
+
         $prefeitura = Prefeitura::where("id", $idPrefeitura)->get()[0]; 
         $endereco = Endereco::where("id", $prefeitura->id_endereco)->get()[0];
         $dados = (object)$request->all();
@@ -93,14 +95,23 @@ class DepartamentoController extends Controller
 
         $endereco = Endereco::where("id", $departamento->id_endereco)->get()[0];
 
-        //$departamentos = Departamento::where('id_secretaria', $idSecretaria)->get();
+        $servidores = DB::table('servidor')
+            ->join('alocacao', 'alocacao.id_servidor', "=", 'servidor.id')
+            ->join('cargo', 'alocacao.id_cargo', "=", 'cargo.id')
+            ->join('pessoa_fisica', 'pessoa_fisica.id', "=", 'servidor.id_pessoa_fisica')
+            ->select('pessoa_fisica.*', 'cargo.nome as cargo')
+            ->where('alocacao.id_departamento', $idDepartamemto)
+            ->get();
 
-        return view('app/departamentos/show', compact('departamento', 'idBrasao','secretarias', 'prefeitura', 'endereco'));
+        $fundacoes = Fundacao::where('id_departamento', $idDepartamemto)->get();
+
+        return view('app/departamentos/show', compact('departamento',  'fundacoes', 'servidores','idBrasao','secretarias', 'prefeitura', 'endereco'));
     }
 
     public function update($idPrefeitura, Request $request)
     {
-        $criticaDepartamento = Validator::make($request->all(), Departamento::rules())->validate();
+        Validator::make($request->all(), Departamento::rules())->validate();
+
         $prefeitura = Prefeitura::where("id", $idPrefeitura)->get()[0]; 
         $dados = (object)$request->all();
        

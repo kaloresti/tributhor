@@ -103,11 +103,19 @@ class FundacaoController extends Controller
 
         $endereco = Endereco::where("id", $fundacao->id_endereco)->get()[0];
 
+        $servidores = DB::table('servidor')
+            ->join('alocacao', 'alocacao.id_servidor', "=", 'servidor.id')
+            ->join('cargo', 'alocacao.id_cargo', "=", 'cargo.id')
+            ->join('pessoa_fisica', 'pessoa_fisica.id', "=", 'servidor.id_pessoa_fisica')
+            ->select('pessoa_fisica.*', 'cargo.nome as cargo')
+            ->where('alocacao.id_fundacao', $idFundacao)
+            ->get();
+
         $departamentos = Departamento::where('id_prefeitura', $idPrefeitura)->get();
         $secretarias = Secretaria::where('id_prefeitura', $idPrefeitura)->get();
         $orgaos = Orgao::where('id_prefeitura', $idPrefeitura)->get();
 
-        return view('app/fundacoes/show', compact('fundacao', 'idBrasao', 'prefeitura', 'endereco','secretarias', 'departamentos', 'orgaos'));
+        return view('app/fundacoes/show', compact('fundacao', 'servidores', 'idBrasao', 'prefeitura', 'endereco','secretarias', 'departamentos', 'orgaos'));
     }
 
     public function update($idPrefeitura, Request $request)

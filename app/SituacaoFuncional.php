@@ -12,6 +12,7 @@ class SituacaoFuncional extends Model
     {
         return [
             'id_situacao_funcional' => 'required',
+            'id_cargo' => 'required'
         ];
     }
 }

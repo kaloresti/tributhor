@@ -45,14 +45,14 @@
                         <small><i class="fas fa-envelope"> </i> 
                             {{$servidor->email}}
                         </small><br>
-                        <small><i class="fas fa-envelope"> </i> 
-                            Cargo: {{$servidor->cargo}}
+                        <small>
+                            <b>Cargo:</b> {{$servidor->cargo}}
                         </small><br>
-                        <small>Perfil: <span class="badge badge-primary"><i class="fas fa-envelope"> </i> 
+                        <small><b>Perfil:</b>
                             {{$servidor->perfil}}</span> 
                         </small><br>
-                        <small>Situação Funcional: <span class="badge badge-primary"><i class="fas fa-envelope"> </i> 
-                            {{$servidor->situacao_funcional}}</span> 
+                        <small><b>Situação Funcional:</b>
+                            {{$servidor->situacao_funcional}}
                         </small><br>
                         <small> <i class="fas fa-map-marker-alt"></i> 
                             {{$servidor->cep}} - {{$servidor->localidade}} - {{$servidor->uf}}, {{$servidor->logradouro}} - {{$servidor->numero}}, {{$servidor->complemento}}, {{$servidor->bairro}}
@@ -60,22 +60,66 @@
                     </td>
                     <td style="width:30%">
                         <b>alocação</b>   <br>
-                        <small><i class="fas fa-envelope"> </i> 
-                            {{$servidor->secretaria}}
+                        <small>
+                            <i class="fas fa-building"></i>
+                            @if($servidor->secretaria == null)
+                                <span class="badge badge-warning">
+                                    não informado
+                                </span>
+                            @else
+                                {{$servidor->secretaria}}
+                            @endif
                         </small><br>
-                        <small><i class="fas fa-envelope"> </i> 
-                            {{$servidor->departamento}}
+                        <small>
+                            <i class="fas fa-store-alt"></i>
+                            @if($servidor->departamento == null)
+                                <span class="badge badge-warning">
+                                    não informado
+                                </span>
+                            @else
+                                {{$servidor->departamento}}
+                            @endif
                         </small><br>
-                        <small><i class="fas fa-envelope"> </i> 
-                            {{$servidor->orgao}}
+                        <small>
+                            <i class="fas fa-store"></i>
+                            @if($servidor->orgao == null)
+                                <span class="badge badge-warning">
+                                    não informado
+                                </span>
+                            @else
+                                {{$servidor->orgao}}
+                            @endif
                         </small><br>
-                        <small><i class="fas fa-envelope"> </i> 
-                            {{$servidor->fundacao}}
+                        <small>
+                            <i class="fas fa-landmark"></i>
+                            @if($servidor->fundacao == null)
+                                <span class="badge badge-warning">
+                                    não informado
+                                </span>
+                            @else
+                                {{$servidor->fundacao}}
+                            @endif
                         </small><br>
-                        <small><i class="fas fa-envelope"> </i> 
-                            {{$servidor->situacao_cadastral}}
+                        <small>
+                            @if($servidor->situacao_cadastral == 'ativo')
+                                <span class="badge badge-success">
+                                    {{$servidor->situacao_cadastral}}
+                                </span>
+                            @endif
+                            @if($servidor->situacao_cadastral == 'hologacao')
+                                <span class="badge badge-warning">
+                                    {{$servidor->situacao_cadastral}}
+                                </span>
+                            @endif
+                            @if($servidor->situacao_cadastral == 'inativo')
+                                <span class="badge badge-danger">
+                                    {{$servidor->situacao_cadastral}}
+                                </span>
+                            @endif
                         </small><br>
-
+                        <a href="" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-folder-open"></i> detalhes
+                        </a>
                     </td>
                     <td></td>
                 </tr>
