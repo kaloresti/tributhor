@@ -27,7 +27,8 @@ Vue.component('color-component', require('./components/ColorComponent.vue').defa
 Vue.component('simple-search-component', require('./components/SimpleSearchComponent.vue').default);
 Vue.component('bar-chart-component', require('./components/BarChartComponent.vue').default);
 Vue.component('input-tel-component', require('./components/InputTelComponent.vue').default);
-
+Vue.component('input-cel-component', require('./components/InputCelComponent.vue').default);
+Vue.component('input-cpf-component', require('./components/InputCpfComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

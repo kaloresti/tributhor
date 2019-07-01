@@ -48,7 +48,7 @@
     export default {
         directives: {mask},
         mounted() {
-            console.log('Component mounted.')
+            console.log('ENDERECO mounted.')
         },
         data() {
             return {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input id="tel" name="tel" type="text" v-mask="'(##) ####-####'" class="form-control">
+        <input id="cpf" name="cpf" type="text" v-mask="'###.###.###-##'" class="form-control">
     </div>
 </template>
 
@@ -10,7 +10,7 @@
         //props: ['message'],
         directives: {mask},
         mounted() {
-            console.log('TEL mounted.')
+            console.log('Component mounted.')
         },
         data() {
             return {

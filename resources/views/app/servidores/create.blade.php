@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">CPF</label>
-                    <input type="text" name="cpf" class="form-control" id="cpf" required="required" >
+                    <input-cpf-component></input-cpf-component>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">Matricula</label>
@@ -65,12 +65,12 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">Telefone</label>
-                    <input type="tel" name="tel" class="form-control" id="tel" >
+{{--                    <input type="tel" name="tel" class="form-control" id="tel" >--}}
                     <input-tel-component></input-tel-component>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">Celular</label>
-                    <input type="tel" name="cel" class="form-control" id="cel">
+                    <input-cel-component></input-cel-component>
                 </div>
             </div>
             <div class="form-row">
