@@ -38,8 +38,48 @@
 
         <hr>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h6>Registro de atividades</h6>
+                <table class="table table-hover table-dark" style="font-size: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Request</th>
+                            <th>Atividade</th>
+                            <th>Rota</th>
+                            <th>Localidade</th>
+                            <th>IP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($logUser as $log)
+                            <tr>
+                                <td>
+                                    {{$log->created_at}}
+                                </td>
+                                <td>
+                                    @if($log->methodType == 'POST')
+                                    <span class="badge badge-success">{{$log->methodType}}</span>
+                                    @endif
+
+                                </td>
+                                <td>
+                                    {{$log->description}}
+                                </td>
+                                <td>
+                                    {{$log->route}}
+                                </td>
+                                <td>
+                                    {{$log->locale}}
+                                </td>
+                                <td>
+                                    {{$log->ipAddress}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
 {{--                <ul class="list-group list-group-flush">--}}
 {{--                    @forelse ($servidores as $servidor)--}}
 {{--                        <li class="list-group-item">--}}

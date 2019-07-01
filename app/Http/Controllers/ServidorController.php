@@ -212,6 +212,7 @@ class ServidorController extends Controller
             ->leftJoin('situacao_cadastral' , 'situacao_cadastral.id', 'alocacao.id_situacao_cadastral')
             ->join('cargo' , 'cargo.id', 'alocacao.id_cargo')
             ->join('perfil' , 'perfil.id', 'alocacao.id_perfil')
+            ->join('users' , 'users.id', 'servidor.id_user')
             //->join('endereco', 'pessoa_fisica.id_endereco', 'endereco.id')
             ->select('pessoa_fisica.nome as servidor',
                 'pessoa_fisica.id as id_endereco',
@@ -233,13 +234,19 @@ class ServidorController extends Controller
                 'fundacao.nome as fundacao',
                 'alocacao.*',
                 'situacao_cadastral.nome as situacao_cadastral',
-                'situacao_funcional.nome as situacao_funcional')
+                'situacao_funcional.nome as situacao_funcional',
+                'users.id as id_user')
             ->where('alocacao.id_prefeitura', "=", $idPrefeitura)
             ->where('alocacao.id_servidor', '=', $idServidor)
             ->get()[0];
 
         $endereco = Endereco::where('id', $servidor->id_endereco)->get()[0];
 
-        return view('app/servidores/show', compact('prefeitura', 'servidor', 'endereco'));
+        $logUser = DB::table('laravel_logger_activity')
+                ->select('laravel_logger_activity.*')
+            ->where('laravel_logger_activity.userId', $servidor->id_user)
+            ->get();
+
+        return view('app/servidores/show', compact('prefeitura', 'servidor', 'endereco', 'logUser'));
     }
 }
