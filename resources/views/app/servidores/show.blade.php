@@ -30,24 +30,118 @@
         <form action="/prefeitura/{{$prefeitura->id}}/servidores/update" enctype="multipart/form-data" method="POST">
             @csrf
             <input type="hidden" value="{{$servidor->id_servidor}}" name="id_servidor" class="form-control input-lg text-uppercase" id="id_servidor"/>
-            <div class="row">
-
+            <small>alocação e situação funcional</small>
+            <hr>
+            <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Secretaria </label>
+                <div id="cp2" class="input-group" title="Using input value">
+                    <select name="id_secretaria" id="id_secretaria" class="form-control">
+                        <option  value="-1">Não vinculado</option>
+                        @foreach($secretarias as $secretaria)
+                            <option value="{{$secretaria->id}}">{{$secretaria->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Departamento </label>
+                <div id="cp2" class="input-group" title="Using input value">
+                    <select name="id_departamento" id="id_departamento" class="form-control">
+                        <option  value="-1">Não vinculado</option>
+                        @foreach($departamentos as $departamento)
+                            <option value="{{$departamento->id}}">{{$departamento->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Órgão</label>
+                <div id="cp2" class="input-group" title="Using input value">
+                    <select name="id_orgao" id="id_orgao" class="form-control">
+                        <option  value="-1">Não vinculado</option>
+                        @foreach($orgaos as $orgao)
+                            <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Fundação</label>
+                <div id="cp2" class="input-group" title="Using input value">
+                    <select name="id_fundacao" id="id_fundacao" class="form-control">
+                        <option  value="-1">Não vinculado</option>
+                        @foreach($fundacoes as $fundacao)
+                            <option value="{{$fundacao->id}}">{{$fundacao->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Cargo</label>
+                <div id="cp2" class="input-group" title="Using input value">
+                    <select name="id_cargo" id="id_cargo" class="form-control">
+                        @foreach($cargos as $cargo)
+                            <option value="{{$cargo->id}}">{{$cargo->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Situação funcional</label>
+                <div id="cp2" class="input-group" title="Using input value">
+                    <select name="id_situacao_funcional" id="id_situacao_funcional" class="form-control" required="required">
+                        @foreach($situacoesFuncionais as $funcional)
+                            <option value="{{$funcional->id}}">{{$funcional->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Situação cadastral</label>
+                <div id="cp2" class="input-group" title="Using input value">
+                    <select name="id_situacao_cadastral" id="id_situacao_cadastral" class="form-control" required="required">
+                        @foreach($situacoesCadastrais as $cadastral)
+                                <option value="{{$cadastral->id}}">{{$cadastral->nome}}</option>
+                            @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold">Data Admissão</label>
+                <input type="date" name="iniciado_em" class="form-control" id="iniciado_em">
+            </div>
+            <!-- <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Órgão</label>
+                <div id="cp2" class="input-group" title="Using input value">
+
+                </div>
+            </div> -->
+        </div>
+        
         </form>
 
 
         <hr>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
+                <h6>Sintético de registros vinculados</h6>
+                <bar-chart-component></bar-chart-component>
+            </div>
+            <div class="col-md-6">
                 <h6>Registro de atividades</h6>
-                <table class="table table-hover table-dark" style="font-size: 10px;">
+                <table class="table table-hover table-condensed table-dark" style="font-size: 10px;">
                     <thead>
                         <tr>
                             <th>Data</th>
                             <th>Request</th>
                             <th>Atividade</th>
                             <th>Rota</th>
-                            <th>Localidade</th>
+                            
                             <th>IP</th>
                         </tr>
                     </thead>
@@ -59,7 +153,16 @@
                                 </td>
                                 <td>
                                     @if($log->methodType == 'POST')
-                                    <span class="badge badge-success">{{$log->methodType}}</span>
+                                        <span class="badge badge-success">{{$log->methodType}}</span>
+                                    @endif
+                                    @if($log->methodType == 'GET')
+                                        <span class="badge badge-primary">{{$log->methodType}}</span>
+                                    @endif
+                                    @if($log->methodType == 'PUT')
+                                        <span class="badge badge-warning">{{$log->methodType}}</span>
+                                    @endif
+                                    @if($log->methodType == 'DELETE')
+                                        <span class="badge badge-danger">{{$log->methodType}}</span>
                                     @endif
 
                                 </td>
@@ -69,9 +172,7 @@
                                 <td>
                                     {{$log->route}}
                                 </td>
-                                <td>
-                                    {{$log->locale}}
-                                </td>
+                            
                                 <td>
                                     {{$log->ipAddress}}
                                 </td>
@@ -79,18 +180,8 @@
                         @endforeach
                     </tbody>
                 </table>
-
-{{--                <ul class="list-group list-group-flush">--}}
-{{--                    @forelse ($servidores as $servidor)--}}
-{{--                        <li class="list-group-item">--}}
-{{--                            <b class="text-uppercase">{{$servidor->nome}} - {{$servidor->cargo}}</b>--}}
-{{--                            <small>3 days ago</small>--}}
-{{--                        </li>--}}
-{{--                    @empty--}}
-{{--                        <div class="alert alert-warning">nenhum registro encontrado</div>--}}
-{{--                    @endforelse--}}
-{{--                </ul><br>--}}
             </div>
+            
         </div>
     </fieldset>
 
@@ -105,7 +196,7 @@
         </div>
     </div>
 
-{{--    <div class="modal fade" id="modalEditBrasao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+<!-- {{--    <div class="modal fade" id="modalEditBrasao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
 {{--        <div class="modal-dialog modal-sm" role="document">--}}
 {{--            <div class="modal-content modal-sm">--}}
 {{--                <div class="modal-body modal-sm">--}}
@@ -113,5 +204,5 @@
 {{--                </div>--}}
 {{--            </div>--}}
 {{--        </div>--}}
-{{--    </div>--}}
+{{--    </div>--}} -->
 @endsection

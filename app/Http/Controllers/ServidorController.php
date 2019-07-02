@@ -200,7 +200,7 @@ class ServidorController extends Controller
             ->select("prefeitura.*", "endereco.uf","endereco.cep" ,"endereco.ibge","endereco.bairro","endereco.logradouro", "endereco.localidade", "brasao.nome as arquivo", "brasao.diretorio", "brasao.extensao")
             ->where("prefeitura.id", "=", $idPrefeitura)
             ->get()[0];
-
+        
         $servidor = DB::table('servidor')
             ->join('pessoa_fisica', 'pessoa_fisica.id', 'servidor.id_pessoa_fisica')
             ->join('alocacao', 'alocacao.id_servidor', 'servidor.id')
@@ -215,7 +215,7 @@ class ServidorController extends Controller
             ->join('users' , 'users.id', 'servidor.id_user')
             //->join('endereco', 'pessoa_fisica.id_endereco', 'endereco.id')
             ->select('pessoa_fisica.nome as servidor',
-                'pessoa_fisica.id as id_endereco',
+                'pessoa_fisica.id_endereco as id_endereco',
                 'pessoa_fisica.cpf as cpf',
                 'pessoa_fisica.rg as rg',
                 'pessoa_fisica.nascido_em as nascido_em',
@@ -239,14 +239,24 @@ class ServidorController extends Controller
             ->where('alocacao.id_prefeitura', "=", $idPrefeitura)
             ->where('alocacao.id_servidor', '=', $idServidor)
             ->get()[0];
-
+        
         $endereco = Endereco::where('id', $servidor->id_endereco)->get()[0];
-
+        
         $logUser = DB::table('laravel_logger_activity')
                 ->select('laravel_logger_activity.*')
             ->where('laravel_logger_activity.userId', $servidor->id_user)
             ->get();
 
-        return view('app/servidores/show', compact('prefeitura', 'servidor', 'endereco', 'logUser'));
+        $departamentos = Departamento::where('id_prefeitura', $idPrefeitura)->get();
+        $secretarias = Secretaria::where('id_prefeitura', $idPrefeitura)->get();
+        $orgaos = Orgao::where('id_prefeitura', $idPrefeitura)->get();
+        $fundacoes = Fundacao::where('id_prefeitura', $idPrefeitura)->get();
+
+        $cargos = Cargo::all();
+        $situacoesCadastrais = SituacaoCadastral::all();
+        $situacoesFuncionais = SituacaoFuncional::all();
+        $perfis = Perfil::all();
+
+        return view('app/servidores/show', compact('prefeitura', 'servidor', 'endereco', 'logUser', 'departamentos', 'secretarias', 'orgaos', 'fundacoes', 'cargos', 'situacoesFuncionais', 'situacoesCadastrais', 'perfis'));
     }
 }

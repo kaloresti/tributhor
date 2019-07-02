@@ -52,7 +52,7 @@
                     <a href="" class="btn btn-outline-info col-md-12" data-toggle="modal" data-target="#modalCreateSecretaria"> <i class="fas fa-plus"></i> nova secretaria</a>
                 </div>
             </div>
-            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase table-dark">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -89,7 +89,7 @@
                 </div>
             </div>
             
-            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase table-dark">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -135,7 +135,7 @@
                 </div>
             </div>
             
-            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase table-dark">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -180,7 +180,7 @@
                 </div>
             </div>
             
-            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase">
+            <table class="table table-hover table-dashed table-bordered table-condensed text-uppercase table-dark">
                 <thead>
                     <tr>
                         <th>Nome</th>

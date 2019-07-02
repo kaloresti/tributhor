@@ -61,11 +61,9 @@
                         <option value="mulato">Mulato</option>
                         <option value="cafuzo">Cafuzo</option>
                     </select>
-                    
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-weight-bold">Telefone</label>
-{{--                    <input type="tel" name="tel" class="form-control" id="tel" >--}}
                     <input-tel-component></input-tel-component>
                 </div>
                 <div class="form-group col-md-4">

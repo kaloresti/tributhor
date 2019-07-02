@@ -1783,7 +1783,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
-      chartData: [['Year', 'Sales', 'Expenses', 'Profit'], ['2014', 1000, 400, 200], ['2015', 1170, 460, 250], ['2016', 660, 1120, 300], ['2017', 1030, 540, 350]],
+      chartData: [['Year', 'Sales', 'Expenses', 'Profit'], ['2011', 3000, 400, 200], ['2012', 1000, 400, 200], ['2013', 1000, 400, 200], ['2014', 1000, 400, 200], ['2015', 1170, 460, 250], ['2016', 660, 1120, 300], ['2017', 1030, 540, 350]],
       chartOptions: {
         chart: {
           title: 'Company Performance',
@@ -50884,8 +50884,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\tributhor\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\tributhor\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/html/kolaresti-tributhor/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/kolaresti-tributhor/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
