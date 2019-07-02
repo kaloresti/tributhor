@@ -244,8 +244,10 @@ class ServidorController extends Controller
         
         $logUser = DB::table('laravel_logger_activity')
                 ->select('laravel_logger_activity.*')
-            ->where('laravel_logger_activity.userId', $servidor->id_user)
-            ->get();
+                ->where('laravel_logger_activity.userId', $servidor->id_user)
+                ->orderBy('laravel_logger_activity.created_at', 'desc')
+                ->limit('10')
+                ->get();
 
         $departamentos = Departamento::where('id_prefeitura', $idPrefeitura)->get();
         $secretarias = Secretaria::where('id_prefeitura', $idPrefeitura)->get();

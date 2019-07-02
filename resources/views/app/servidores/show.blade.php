@@ -39,7 +39,11 @@
                     <select name="id_secretaria" id="id_secretaria" class="form-control">
                         <option  value="-1">Não vinculado</option>
                         @foreach($secretarias as $secretaria)
-                            <option value="{{$secretaria->id}}">{{$secretaria->nome}}</option>
+                            @if($servidor->id_secretaria == $secretaria->id)
+                                <option selected="selected" value="{{$secretaria->id}}">{{$secretaria->nome}}</option>
+                            @else
+                                <option value="{{$secretaria->id}}">{{$secretaria->nome}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -115,25 +119,20 @@
                 <label class="font-weight-bold">Data Admissão</label>
                 <input type="date" name="iniciado_em" class="form-control" id="iniciado_em">
             </div>
-            <!-- <div class="form-group col-md-4">
-                <label class="font-weight-bold" for="">Órgão</label>
+            <div class="form-group col-md-4">
+                <label class="font-weight-bold" for="">Clique oara salvar as atualizações</label>
                 <div id="cp2" class="input-group" title="Using input value">
-
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-sync-alt"></i> salvar</button>
                 </div>
-            </div> -->
+            </div>
         </div>
         
         </form>
-
-
         <hr>
+
         <div class="row">
-            <div class="col-md-6">
-                <h6>Sintético de registros vinculados</h6>
-                <bar-chart-component></bar-chart-component>
-            </div>
-            <div class="col-md-6">
-                <h6>Registro de atividades</h6>
+            <div class="col-md-12">
+            <h6>Registro de atividades</h6>
                 <table class="table table-hover table-condensed table-dark" style="font-size: 10px;">
                     <thead>
                         <tr>
@@ -141,7 +140,6 @@
                             <th>Request</th>
                             <th>Atividade</th>
                             <th>Rota</th>
-                            
                             <th>IP</th>
                         </tr>
                     </thead>
@@ -164,7 +162,6 @@
                                     @if($log->methodType == 'DELETE')
                                         <span class="badge badge-danger">{{$log->methodType}}</span>
                                     @endif
-
                                 </td>
                                 <td>
                                     {{$log->description}}
@@ -172,7 +169,6 @@
                                 <td>
                                     {{$log->route}}
                                 </td>
-                            
                                 <td>
                                     {{$log->ipAddress}}
                                 </td>
@@ -181,7 +177,6 @@
                     </tbody>
                 </table>
             </div>
-            
         </div>
     </fieldset>
 
