@@ -54,7 +54,11 @@
                     <select name="id_departamento" id="id_departamento" class="form-control">
                         <option  value="-1">Não vinculado</option>
                         @foreach($departamentos as $departamento)
-                            <option value="{{$departamento->id}}">{{$departamento->nome}}</option>
+                            @if($servidor->id_departamento == $departamento->id)
+                                <option selected="selected" value="{{$departamento->id}}">{{$departamento->nome}}</option>
+                            @else
+                                <option value="{{$departamento->id}}">{{$departamento->nome}}</option>
+                            @endif 
                         @endforeach
                     </select>
                 </div>
@@ -65,7 +69,11 @@
                     <select name="id_orgao" id="id_orgao" class="form-control">
                         <option  value="-1">Não vinculado</option>
                         @foreach($orgaos as $orgao)
-                            <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
+                            @if($servidor->id_orgao == $orgao->id)
+                                <option selected="selected" value="{{$orgao->id}}">{{$orgao->nome}}</option>
+                            @else
+                                <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
+                            @endif 
                         @endforeach
                     </select>
                 </div>
@@ -78,7 +86,11 @@
                     <select name="id_fundacao" id="id_fundacao" class="form-control">
                         <option  value="-1">Não vinculado</option>
                         @foreach($fundacoes as $fundacao)
-                            <option value="{{$fundacao->id}}">{{$fundacao->nome}}</option>
+                            @if($servidor->id_fundacao == $fundacao->id)
+                                <option selected="selected" value="{{$fundacao->id}}">{{$fundacao->nome}}</option>
+                            @else
+                                <option value="{{$fundacao->id}}">{{$fundacao->nome}}</option>
+                            @endif  
                         @endforeach
                     </select>
                 </div>
@@ -88,7 +100,11 @@
                 <div id="cp2" class="input-group" title="Using input value">
                     <select name="id_cargo" id="id_cargo" class="form-control">
                         @foreach($cargos as $cargo)
-                            <option value="{{$cargo->id}}">{{$cargo->nome}}</option>
+                            @if($servidor->id_cargo == $cargo->id)
+                                <option selected="selected" value="{{$cargo->id}}">{{$cargo->nome}}</option>
+                            @else
+                                <option value="{{$cargo->id}}">{{$cargo->nome}}</option>
+                            @endif  
                         @endforeach
                     </select>
                 </div>
@@ -98,7 +114,11 @@
                 <div id="cp2" class="input-group" title="Using input value">
                     <select name="id_situacao_funcional" id="id_situacao_funcional" class="form-control" required="required">
                         @foreach($situacoesFuncionais as $funcional)
-                            <option value="{{$funcional->id}}">{{$funcional->nome}}</option>
+                            @if($servidor->id_situacao_funcional == $funcional->id)
+                                <option selected="selected" value="{{$funcional->id}}">{{$funcional->nome}}</option>
+                            @else
+                                <option value="{{$funcional->id}}">{{$funcional->nome}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -110,26 +130,28 @@
                 <div id="cp2" class="input-group" title="Using input value">
                     <select name="id_situacao_cadastral" id="id_situacao_cadastral" class="form-control" required="required">
                         @foreach($situacoesCadastrais as $cadastral)
+                            @if($servidor->id_situacao_cadastral == $cadastral->id)
+                                <option selected="selected" value="{{$cadastral->id}}">{{$cadastral->nome}}</option>
+                            @else
                                 <option value="{{$cadastral->id}}">{{$cadastral->nome}}</option>
-                            @endforeach
+                            @endif
+                        @endforeach
                     </select>
                 </div>
             </div>
             <div class="form-group col-md-4">
                 <label class="font-weight-bold">Data Admissão</label>
-                <input type="date" name="iniciado_em" class="form-control" id="iniciado_em">
+                <input type="date" value="{{$servidor->iniciado_em}}" name="iniciado_em" class="form-control" id="iniciado_em">
             </div>
             <div class="form-group col-md-4">
-                <label class="font-weight-bold" for="">Clique oara salvar as atualizações</label>
+                <label class="font-weight-bold" for="">Finalizar</label><br>
                 <div id="cp2" class="input-group" title="Using input value">
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-sync-alt"></i> salvar</button>
                 </div>
             </div>
         </div>
-        
         </form>
         <hr>
-
         <div class="row">
             <div class="col-md-12">
             <h6>Registro de atividades</h6>

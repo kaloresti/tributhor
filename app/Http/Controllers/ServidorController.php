@@ -233,7 +233,9 @@ class ServidorController extends Controller
                 'fundacao.id as id_fundacao',
                 'fundacao.nome as fundacao',
                 'alocacao.*',
+                //'situacao_cadastral.id as id_situacao_cadastral',
                 'situacao_cadastral.nome as situacao_cadastral',
+                //'situacao_funcional.id as id_situacao_funcional',
                 'situacao_funcional.nome as situacao_funcional',
                 'users.id as id_user')
             ->where('alocacao.id_prefeitura', "=", $idPrefeitura)
